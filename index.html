@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>signaldirective ~/repos</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #1e1e2e;
+    background-image:
+        radial-gradient(ellipse at center, #1e1e2e 0%, #14141f 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'DM Mono', 'Monaco', 'Consolas', monospace;
+    padding: 16px;
+}
+
+.terminal {
+    background: #11111b;
+    border: 2px solid #313244;
+    border-radius: 8px;
+    box-shadow:
+        0 0 30px rgba(186, 229, 255, 0.04),
+        inset 0 0 60px rgba(0, 0, 0, 0.4);
+    width: 100%;
+    max-width: 760px;
+    overflow: hidden;
+    position: relative;
+}
+
+.terminal::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(186, 229, 255, 0.008) 2px,
+        rgba(186, 229, 255, 0.008) 4px
+    );
+    pointer-events: none;
+    z-index: 1;
+}
+
+.titlebar {
+    background: #181825;
+    border-bottom: 1px solid #313244;
+    padding: 8px 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: #6c7086;
+    user-select: none;
+}
+
+.titlebar-dots {
+    display: flex;
+    gap: 6px;
+}
+
+.titlebar-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+
+.titlebar-dot.r { background: #ffa398; }
+.titlebar-dot.y { background: #ebcb8b; }
+.titlebar-dot.g { background: #d0f7a6; }
+
+.titlebar-text {
+    margin-left: 12px;
+    font-weight: 400;
+    color: #585b70;
+}
+
+.titlebar-text .at {
+    color: #6c7086;
+}
+
+.titlebar-text .host {
+    color: #bae5ff;
+}
+
+.titlebar-text .path {
+    color: #a6adc8;
+}
+
+.body {
+    padding: 24px 28px 20px;
+    position: relative;
+    z-index: 0;
+    min-height: 400px;
+    display: flex;
+    flex-direction: column;
+}
+
+.banner {
+    color: #45475a;
+    font-size: 11px;
+    line-height: 1.15;
+    letter-spacing: 0.02em;
+    margin-bottom: 20px;
+    white-space: pre;
+}
+
+.banner .accent {
+    color: #bae5ff;
+}
+
+.prompt-line {
+    color: #6c7086;
+    font-size: 14px;
+    margin-bottom: 16px;
+}
+
+.prompt-line .prompt-user {
+    color: #d0f7a6;
+}
+
+.prompt-line .prompt-path {
+    color: #bae5ff;
+}
+
+.prompt-line .prompt-symbol {
+    color: #6c7086;
+}
+
+.repo-list {
+    list-style: none;
+    margin-bottom: 20px;
+    flex: 1;
+}
+
+.repo-item {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    padding: 6px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.15s ease, color 0.15s ease;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #a6adc8;
+    text-decoration: none;
+}
+
+.repo-item:hover,
+.repo-item.highlighted {
+    background: rgba(186, 229, 255, 0.06);
+    color: #cdd6f4;
+}
+
+.repo-item .index {
+    color: #585b70;
+    min-width: 28px;
+    font-weight: 300;
+}
+
+.repo-item .name {
+    color: #bae5ff;
+    min-width: 180px;
+    font-weight: 400;
+}
+
+.repo-item:hover .name {
+    color: #c4eaff;
+}
+
+.repo-item .desc {
+    color: #6c7086;
+    font-weight: 300;
+    font-size: 13px;
+}
+
+.repo-item:hover .desc {
+    color: #a6adc8;
+}
+
+.prompt {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    margin-top: auto;
+    padding-top: 12px;
+    border-top: 1px solid #181825;
+}
+
+.prompt .prompt-user {
+    color: #d0f7a6;
+}
+
+.prompt .prompt-path {
+    color: #bae5ff;
+}
+
+.prompt .prompt-symbol {
+    color: #6c7086;
+}
+
+.cursor {
+    display: inline-block;
+    width: 8px;
+    height: 16px;
+    background: #d0f7a6;
+    animation: blink 1s step-end infinite;
+    vertical-align: text-bottom;
+    margin-left: 2px;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+.footer {
+    border-top: 1px solid #181825;
+    padding: 8px 16px;
+    font-size: 12px;
+    color: #45475a;
+    display: flex;
+    gap: 16px;
+    background: #14141f;
+}
+
+.footer kbd {
+    color: #585b70;
+    background: #1e1e2e;
+    padding: 1px 6px;
+    border-radius: 3px;
+    border: 1px solid #313244;
+    font-family: inherit;
+    font-size: 11px;
+}
+
+.footer .action {
+    color: #6c7086;
+}
+
+.footer .action .highlight {
+    color: #bae5ff;
+}
+
+.quit-overlay {
+    display: none;
+    position: absolute;
+    inset: 0;
+    z-index: 10;
+    background: #11111b;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    color: #ffa398;
+    animation: fadeIn 0.3s ease;
+}
+
+.quit-overlay.show {
+    display: flex;
+}
+
+.quit-overlay .ascii {
+    color: #45475a;
+    font-size: 12px;
+    line-height: 1.3;
+    margin-bottom: 16px;
+    white-space: pre;
+}
+
+.quit-overlay .msg {
+    color: #6c7086;
+    font-size: 13px;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@media (max-width: 600px) {
+    .body { padding: 16px 16px 12px; }
+    .repo-item { flex-wrap: wrap; gap: 4px; }
+    .repo-item .name { min-width: 140px; }
+    .repo-item .desc { width: 100%; padding-left: 40px; font-size: 12px; }
+    .banner { font-size: 9px; }
+    .footer { flex-wrap: wrap; gap: 8px; }
+}
+</style>
+</head>
+<body>
+
+<div class="terminal" id="terminal">
+    <div class="titlebar">
+        <div class="titlebar-dots">
+            <span class="titlebar-dot r"></span>
+            <span class="titlebar-dot y"></span>
+            <span class="titlebar-dot g"></span>
+        </div>
+        <div class="titlebar-text">
+            <span class="at">signaldirective</span><span class="path">@github</span><span class="at">:</span><span class="path">~</span>
+        </div>
+    </div>
+
+    <div class="body" id="body">
+        <div class="banner" aria-label="signaldirective ascii art">  <span class="accent">╔═══╗</span>╦ ╦╔═╗╔╗╔╔═╗╦═╗╦╔╗╔╔═╗╦  ╦╔═╗╦═╗╔╦╗
+  <span class="accent">╠═╗║</span>║ ║║ ║║║║║ ╦╠╦╝║║║║║ ╦║  ║║ ║╠╦╝ ║║
+  <span class="accent">╩ ╩╚</span>╚═╝╚═╝╝╚╝╚═╝╩╚═╩╝╚╝╚═╝╚═╝╝╚═╝╩╚══╩╝</div>
+
+        <div class="prompt-line">
+            <span class="prompt-user">signaldirective</span><span class="prompt-symbol">@</span><span class="prompt-path">github</span><span class="prompt-symbol">:</span><span class="prompt-path">~/repos</span><span class="prompt-symbol"> $ </span>ls -la
+        </div>
+
+        <div class="repo-list" id="repoList" role="listbox" aria-label="Repository list">
+            <a class="repo-item" href="https://github.com/signaldirective/aur_safety" target="_blank" rel="noopener" data-index="1" role="option">
+                <span class="index">[1]</span>
+                <span class="name">aur_safety</span>
+                <span class="desc">drop-in AUR helper wrapper — annotates if a package is suspected malicious</span>
+            </a>
+            <a class="repo-item" href="https://github.com/signaldirective/twist" target="_blank" rel="noopener" data-index="2" role="option">
+                <span class="index">[2]</span>
+                <span class="name">twist</span>
+                <span class="desc">omarchy-aware firefox userChrome generator & start page</span>
+            </a>
+            <a class="repo-item" href="https://github.com/signaldirective/storm-cloud" target="_blank" rel="noopener" data-index="3" role="option">
+                <span class="index">[3]</span>
+                <span class="name">storm-cloud</span>
+                <span class="desc">omarchy theme with a stormy vibe</span>
+            </a>
+            <a class="repo-item" href="https://github.com/signaldirective/robco-theme" target="_blank" rel="noopener" data-index="4" role="option">
+                <span class="index">[4]</span>
+                <span class="name">robco-theme</span>
+                <span class="desc">Fallout 3 RobCo terminal inspired omarchy theme</span>
+            </a>
+            <a class="repo-item" href="https://github.com/signaldirective/robco-mojave" target="_blank" rel="noopener" data-index="5" role="option">
+                <span class="index">[5]</span>
+                <span class="name">robco-mojave</span>
+                <span class="desc">Fallout New Vegas terminal inspired omarchy theme</span>
+            </a>
+            <a class="repo-item" href="https://github.com/signaldirective/gruvy-glass" target="_blank" rel="noopener" data-index="6" role="option">
+                <span class="index">[6]</span>
+                <span class="name">gruvy-glass</span>
+                <span class="desc">semi-translucent gruvbox inspired omarchy theme</span>
+            </a>
+            <a class="repo-item" href="https://github.com/signaldirective/catppuccin-sherbet" target="_blank" rel="noopener" data-index="7" role="option">
+                <span class="index">[7]</span>
+                <span class="name">catppuccin-sherbet</span>
+                <span class="desc">sherbet flavored catppuccin omarchy theme</span>
+            </a>
+            <a class="repo-item" href="https://github.com/signaldirective/andromeda" target="_blank" rel="noopener" data-index="8" role="option">
+                <span class="index">[8]</span>
+                <span class="name">andromeda</span>
+                <span class="desc">omarchy theme inspired by Andromeda Qt/GTK themes</span>
+            </a>
+            <a class="repo-item" href="https://github.com/signaldirective/delete-theme" target="_blank" rel="noopener" data-index="9" role="option">
+                <span class="index">[9]</span>
+                <span class="name">delete-theme</span>
+                <span class="desc">omarchy theme that will UPGRADE or DELETE you</span>
+            </a>
+        </div>
+
+        <div class="prompt">
+            <span class="prompt-user">signaldirective</span><span class="prompt-symbol">@</span><span class="prompt-path">github</span><span class="prompt-symbol">:</span><span class="prompt-path">~/repos</span><span class="prompt-symbol"> $ </span>
+            <span class="cursor" aria-hidden="true"></span>
+        </div>
+    </div>
+
+    <div class="footer">
+        <span class="action"><kbd>1-9</kbd> <span class="highlight">open</span></span>
+        <span class="action"><kbd>&uarr;</kbd><kbd>&darr;</kbd> <span class="highlight">navigate</span></span>
+        <span class="action"><kbd>q</kbd> <span class="highlight">quit</span></span>
+        <span class="action" style="margin-left:auto;color:#45475a;">signaldirective · github</span>
+    </div>
+
+    <div class="quit-overlay" id="quitOverlay">
+        <div class="ascii">  ╔══════════════════════════════════════╗
+  ║        connection terminated.        ║
+  ╚══════════════════════════════════════╝</div>
+        <div class="msg">[process completed] close this tab or press any key to restart</div>
+    </div>
+</div>
+
+<script>
+(function () {
+    const items = document.querySelectorAll('.repo-item');
+    let current = 0;
+
+    function highlight(idx) {
+        items.forEach((el, i) => {
+            el.classList.toggle('highlighted', i === idx);
+        });
+    }
+
+    function openCurrent() {
+        if (items[current]) {
+            window.open(items[current].href, '_blank');
+        }
+    }
+
+    function openByIndex(n) {
+        const el = document.querySelector(`.repo-item[data-index="${n}"]`);
+        if (el) window.open(el.href, '_blank');
+    }
+
+    document.addEventListener('keydown', (e) => {
+        const overlay = document.getElementById('quitOverlay');
+        if (overlay.classList.contains('show')) {
+            overlay.classList.remove('show');
+            return;
+        }
+
+        switch (e.key) {
+            case 'ArrowDown':
+                e.preventDefault();
+                current = Math.min(current + 1, items.length - 1);
+                highlight(current);
+                break;
+            case 'ArrowUp':
+                e.preventDefault();
+                current = Math.max(current - 1, 0);
+                highlight(current);
+                break;
+            case 'Enter':
+                e.preventDefault();
+                openCurrent();
+                break;
+            case 'q':
+            case 'Q':
+                e.preventDefault();
+                overlay.classList.add('show');
+                break;
+            default:
+                const n = parseInt(e.key, 10);
+                if (n >= 1 && n <= 9) openByIndex(n);
+        }
+    });
+
+    items.forEach((el, i) => {
+        el.addEventListener('mouseenter', () => {
+            current = i;
+            highlight(current);
+        });
+        el.addEventListener('click', (e) => {
+            e.preventDefault();
+            current = i;
+            window.open(el.href, '_blank');
+        });
+    });
+
+    highlight(0);
+})();
+</script>
+</body>
+</html>
