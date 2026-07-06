@@ -189,6 +189,56 @@ body {
     color: #a6adc8;
 }
 
+.repo-list {
+    list-style: none;
+    margin-bottom: 20px;
+    flex: 1;
+}
+
+.ko-fi {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    padding: 6px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.15s ease, color 0.15s ease;
+    font-size: 10px;
+    line-height: 1.5;
+    color: #a6adc8;
+    text-decoration: none;
+}
+
+.ko-fi:hover,
+.ko-fi.highlighted {
+    background: rgba(186, 229, 255, 0.06);
+    color: #cdd6f4;
+}
+
+.ko-fi .index {
+    color: #585b70;
+    min-width: 28px;
+    font-weight: 300;
+}
+.ko-fi .name {
+    color: #bae5ff;
+    min-width: 180px;
+    font-weight: 400;
+}
+
+.ko-fi:hover .name {
+    color: #c4eaff;
+}
+
+.ko-fi .desc {
+    color: #6c7086;
+    font-weight: 300;
+    font-size: 10px;
+}
+
+.ko-fi:hover .desc {
+    color: #a6adc8;
+}
 .prompt {
     display: flex;
     align-items: center;
@@ -326,50 +376,55 @@ body {
         </div>
 
         <div class="repo-list" id="repoList" role="listbox" aria-label="Repository list">
-            <a class="repo-item" href="https://github.com/signaldirective/aur_safety" target="_blank" rel="noopener" data-index="1" role="option">
-                <span class="index">[1]</span>
+            <a class="repo-item" href="https://github.com/signaldirective/aur_safety" target="_blank" rel="noopener" data-index="0" role="option">
+                <span class="index">[0]</span>
                 <span class="name">aur_safety</span>
                 <span class="desc">drop-in AUR helper wrapper — annotates if a package is suspected malicious</span>
             </a>
-            <a class="repo-item" href="https://github.com/signaldirective/twist" target="_blank" rel="noopener" data-index="2" role="option">
-                <span class="index">[2]</span>
+            <a class="repo-item" href="https://github.com/signaldirective/twist" target="_blank" rel="noopener" data-index="1" role="option">
+                <span class="index">[1]</span>
                 <span class="name">twist</span>
                 <span class="desc">omarchy-aware firefox userChrome generator & start page</span>
             </a>
-            <a class="repo-item" href="https://github.com/signaldirective/storm-cloud" target="_blank" rel="noopener" data-index="3" role="option">
-                <span class="index">[3]</span>
+            <a class="repo-item" href="https://github.com/signaldirective/storm-cloud" target="_blank" rel="noopener" data-index="2" role="option">
+                <span class="index">[2]</span>
                 <span class="name">storm-cloud</span>
                 <span class="desc">omarchy theme with a stormy vibe</span>
             </a>
-            <a class="repo-item" href="https://github.com/signaldirective/robco-theme" target="_blank" rel="noopener" data-index="4" role="option">
-                <span class="index">[4]</span>
+            <a class="repo-item" href="https://github.com/signaldirective/robco-theme" target="_blank" rel="noopener" data-index="3" role="option">
+                <span class="index">[3]</span>
                 <span class="name">robco-theme</span>
                 <span class="desc">Fallout 3 RobCo terminal inspired omarchy theme</span>
             </a>
-            <a class="repo-item" href="https://github.com/signaldirective/robco-mojave" target="_blank" rel="noopener" data-index="5" role="option">
-                <span class="index">[5]</span>
+            <a class="repo-item" href="https://github.com/signaldirective/robco-mojave" target="_blank" rel="noopener" data-index="4" role="option">
+                <span class="index">[4]</span>
                 <span class="name">robco-mojave</span>
                 <span class="desc">Fallout New Vegas terminal inspired omarchy theme</span>
             </a>
-            <a class="repo-item" href="https://github.com/signaldirective/gruvy-glass" target="_blank" rel="noopener" data-index="6" role="option">
-                <span class="index">[6]</span>
+            <a class="repo-item" href="https://github.com/signaldirective/gruvy-glass" target="_blank" rel="noopener" data-index="5" role="option">
+                <span class="index">[5]</span>
                 <span class="name">gruvy-glass</span>
                 <span class="desc">semi-translucent gruvbox inspired omarchy theme</span>
             </a>
-            <a class="repo-item" href="https://github.com/signaldirective/catppuccin-sherbet" target="_blank" rel="noopener" data-index="7" role="option">
-                <span class="index">[7]</span>
+            <a class="repo-item" href="https://github.com/signaldirective/catppuccin-sherbet" target="_blank" rel="noopener" data-index="6" role="option">
+                <span class="index">[6]</span>
                 <span class="name">catppuccin-sherbet</span>
                 <span class="desc">sherbet flavored catppuccin omarchy theme</span>
             </a>
-            <a class="repo-item" href="https://github.com/signaldirective/andromeda" target="_blank" rel="noopener" data-index="8" role="option">
-                <span class="index">[8]</span>
+            <a class="repo-item" href="https://github.com/signaldirective/andromeda" target="_blank" rel="noopener" data-index="7" role="option">
+                <span class="index">[7]</span>
                 <span class="name">andromeda</span>
                 <span class="desc">omarchy theme inspired by Andromeda Qt/GTK themes</span>
             </a>
-            <a class="repo-item" href="https://github.com/signaldirective/delete-theme" target="_blank" rel="noopener" data-index="9" role="option">
-                <span class="index">[9]</span>
+            <a class="repo-item" href="https://github.com/signaldirective/delete-theme" target="_blank" rel="noopener" data-index="8" role="option">
+                <span class="index">[8]</span>
                 <span class="name">delete-theme</span>
                 <span class="desc">omarchy theme that will UPGRADE or DELETE you</span>
+            </a>
+            <a class="repo-item" href="https://github.com/signaldirective/rebel-rebel" target="_blank" rel="noopener" data-index="9" role="option">
+                <span class="index">[9]</span>
+                <span class="name">rebel rebel</span>
+                <span class="desc">omarchy theme that sparks rebellion</span>
             </a>
         </div>
 
@@ -380,10 +435,12 @@ body {
     </div>
 
     <div class="footer">
-        <span class="action"><kbd>1-9</kbd> <span class="highlight">open</span></span>
+        <span class="action"><kbd>0-9</kbd> <span class="highlight">open</span></span>
         <span class="action"><kbd>&uarr;</kbd><kbd>&darr;</kbd> <span class="highlight">navigate</span></span>
         <span class="action"><kbd>q</kbd> <span class="highlight">quit</span></span>
-        <span class="action" style="margin-left:auto;color:#45475a;">signaldirective · github</span>
+        <a class="ko-fi" style="margin-left:auto;color:#45475a;" href="https://ko-fi.com/signaldirective" target="_blank"  rel="noopener" role="option">
+         
+       <span class="name"> signaldirective · ko-fi</span></a>
     </div>
 
     <div class="quit-overlay" id="quitOverlay">
@@ -445,7 +502,7 @@ body {
                 break;
             default:
                 const n = parseInt(e.key, 10);
-                if (n >= 1 && n <= 9) openByIndex(n);
+                if (n >= 0 && n <= 9) openByIndex(n);
         }
     });
 
