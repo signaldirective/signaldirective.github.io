@@ -552,7 +552,7 @@ body {
 
         if (e.ctrlKey) {
             const n = parseInt(e.key, 11);
-            if (n >= 1 && n <= 10) {
+            if (n >= 0 && n <= 9) {
                 e.preventDefault();
                 openTheme(n);
             }
