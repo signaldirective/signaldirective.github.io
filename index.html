@@ -413,23 +413,28 @@ body {
                 <span class="name">twist</span>
                 <span class="desc">omarchy-aware firefox userChrome generator & start page</span>
             </a>
-            <a class="repo-item" href="https://github.com/signaldirective/pridelet" target="_blank" rel="noopener" data-index="4" role="option">
+             <a class="repo-item" href="https://github.com/signaldirective/twist-quattro" target="_blank" rel="noopener" data-index="4" role="option">
                 <span class="index">[4]</span>
+                <span class="name">twist quattro</span>
+                <span class="desc">omarchy-aware firefox userChrome generator & start page QUATTRO EDITION!</span>
+            </a>
+            <a class="repo-item" href="https://github.com/signaldirective/pridelet" target="_blank" rel="noopener" data-index="5" role="option">
+                <span class="index">[5]</span>
                 <span class="name">pridelet</span>
                 <span class="desc">pride powered ASCII text generator</span>
             </a>
-            <a class="repo-item" href="https://github.com/signaldirective/fallout-hacking" target="_blank" rel="noopener" data-index="5" role="option">
-                <span class="index">[5]</span>
+            <a class="repo-item" href="https://github.com/signaldirective/fallout-hacking" target="_blank" rel="noopener" data-index="6" role="option">
+                <span class="index">[6]</span>
                 <span class="name">fallout-hacking</span>
                 <span class="desc">fallout inspired hacking game</span>
             </a>
-            <a class="repo-item" href="https://github.com/signaldirective/fetchdots" target="_blank" rel="noopener" data-index="6" role="option">
-                <span class="index">[6]</span>
+            <a class="repo-item" href="https://github.com/signaldirective/fetchdots" target="_blank" rel="noopener" data-index="7" role="option">
+                <span class="index">[7]</span>
                 <span class="name">fetchdots</span>
                 <span class="desc">my fastfetch config and dot art example file</span>
             </a>
-            <a class="repo-item" href="https://github.com/signaldirective/color-scripts" target="_blank" rel="noopener" data-index="7" role="option">
-                <span class="index">[7]</span>
+            <a class="repo-item" href="https://github.com/signaldirective/color-scripts" target="_blank" rel="noopener" data-index="8" role="option">
+                <span class="index">[8]</span>
                 <span class="name">color-scripts</span>
                 <span class="desc">shell scripts for displaying colors — some redundancies</span>
             </a>
@@ -480,6 +485,11 @@ body {
                 <span class="name">storm-cloud</span>
                 <span class="desc">omarchy theme with a stormy vibe</span>
             </a>
+              <a class="repo-item" href="https://github.com/signaldirective/neo-eldritch" target="_blank" rel="noopener" data-ctrl="0" role="option">
+                <span class="index">[C9]</span>
+                <span class="name">neo-eldritch</span>
+                <span class="desc">omarchy theme for cosmic horrors!</span>
+            </a>
         </div>
 
         <div class="prompt">
@@ -489,8 +499,8 @@ body {
     </div>
 
     <div class="footer">
-        <span class="action"><kbd>1-7</kbd> <span class="highlight">projects</span></span>
-        <span class="action"><kbd>ctrl+1-9</kbd> <span class="highlight">themes</span></span>
+        <span class="action"><kbd>1-8</kbd> <span class="highlight">projects</span></span>
+        <span class="action"><kbd>ctrl+1-0</kbd> <span class="highlight">themes</span></span>
         <span class="action"><kbd>&uarr;</kbd><kbd>&darr;</kbd> <span class="highlight">navigate</span></span>
         <span class="action"><kbd>q</kbd> <span class="highlight">quit</span></span>
         <a class="ko-fi" style="margin-left:auto;color:#45475a;" href="https://ko-fi.com/signaldirective" target="_blank"  rel="noopener" role="option">
@@ -541,8 +551,8 @@ body {
         }
 
         if (e.ctrlKey) {
-            const n = parseInt(e.key, 10);
-            if (n >= 1 && n <= 9) {
+            const n = parseInt(e.key, 11);
+            if (n >= 1 && n <= 10) {
                 e.preventDefault();
                 openTheme(n);
             }
