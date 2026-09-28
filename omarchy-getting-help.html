@@ -1,0 +1,1137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Getting Help with Omarchy</title>
+<style>
+:root {
+  --bg: #ffffff;
+  --fg: #1f2328;
+  --muted: #59636e;
+  --border: #d1d9e0;
+  --accent: #0a6cff;
+  --accent-soft: #eaf2ff;
+  --code-bg: #f6f8fa;
+  --quote-bg: #f6f8fa;
+  --table-stripe: #f6f8fa;
+  --max: 60rem;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0d1117;
+    --fg: #e6edf3;
+    --muted: #9198a1;
+    --border: #30363d;
+    --accent: #6cb6ff;
+    --accent-soft: #12233d;
+    --code-bg: #161b22;
+    --quote-bg: #161b22;
+    --table-stripe: #161b22;
+  }
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font: 16px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+        Helvetica, Arial, sans-serif;
+  -webkit-text-size-adjust: 100%;
+}
+.topnav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem 1rem;
+  align-items: center;
+  justify-content: space-between;
+  padding: .6rem 1rem;
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--border);
+}
+.topnav .brand { font-weight: 700; letter-spacing: .2px; }
+.topnav .links { display: flex; gap: .5rem; flex-wrap: wrap; }
+.topnav a {
+  color: var(--fg);
+  text-decoration: none;
+  font-size: .9rem;
+  padding: .3rem .65rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  white-space: nowrap;
+}
+.topnav a:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
+main {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 2.2rem 1.15rem 4rem;
+}
+h1, h2, h3 { line-height: 1.25; scroll-margin-top: 4.5rem; }
+h1 { font-size: 2rem; margin: 0 0 .6rem; letter-spacing: -.02em; }
+h2 {
+  font-size: 1.45rem;
+  margin: 2.6rem 0 .9rem;
+  padding-bottom: .35rem;
+  border-bottom: 1px solid var(--border);
+}
+h3 { font-size: 1.12rem; margin: 2rem 0 .6rem; }
+p { margin: .7rem 0; }
+a { color: var(--accent); }
+a:hover { text-decoration: underline; }
+hr { border: 0; border-top: 1px solid var(--border); margin: 2.2rem 0; }
+ul, ol { padding-left: 1.5rem; }
+li { margin: .28rem 0; }
+code {
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas,
+               "Liberation Mono", monospace;
+  font-size: .88em;
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: .12em .38em;
+}
+pre {
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: .9rem 1rem;
+  overflow-x: auto;
+  line-height: 1.5;
+}
+pre code { background: none; border: 0; padding: 0; font-size: .85rem; }
+blockquote {
+  margin: 1rem 0;
+  padding: .5rem 1rem;
+  background: var(--quote-bg);
+  border-left: 4px solid var(--accent);
+  border-radius: 0 8px 8px 0;
+  color: var(--fg);
+}
+blockquote p:first-child { margin-top: .2rem; }
+blockquote p:last-child { margin-bottom: .2rem; }
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 1rem 0;
+  font-size: .94rem;
+}
+th, td { border: 1px solid var(--border); padding: .5rem .65rem; text-align: left; vertical-align: top; }
+thead th { background: var(--code-bg); }
+tbody tr:nth-child(even) { background: var(--table-stripe); }
+@media (max-width: 720px) {
+  table { display: block; overflow-x: auto; }
+  h1 { font-size: 1.6rem; }
+}
+footer {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 1.5rem 1.15rem 3rem;
+  color: var(--muted);
+  font-size: .85rem;
+  border-top: 1px solid var(--border);
+}
+.toc-note { color: var(--muted); font-size: .9rem; }
+</style>
+</head>
+<body>
+<a id="top"></a>
+<nav class="topnav">
+  <span class="brand">Getting Help with Omarchy</span>
+  <span class="links">
+    <a href="#2-asking-for-help-in-discord-omarchy-help">Jump to: #omarchy-help</a>
+    <a href="#3-filing-a-github-issue">Jump to: GitHub issues</a>
+    <a href="#top">Top</a>
+  </span>
+</nav>
+<main>
+<h1 id="getting-help-with-omarchy">Getting Help with Omarchy</h1>
+<p>A practical guide to asking for help in the Discord <strong><code>#omarchy-help</code></strong> forum and
+to filing a good <strong>GitHub issue</strong> against Omarchy.</p>
+<p>The difference between a question that gets solved in ten minutes and one that
+sits unanswered is almost never luck. It is preparation: reproducing the
+problem, collecting the right details, and presenting them so a volunteer can
+understand the issue without asking five follow-up questions.</p>
+<hr>
+<h2 id="table-of-contents">Table of contents</h2>
+<ul>
+<li><a href="#0-where-should-i-ask">0. Where should I ask?</a></li>
+<li><a href="#1-the-universal-rules-read-these-once">1. The universal rules (read these once)</a></li>
+<li><a href="#2-asking-for-help-in-discord-omarchy-help">2. Asking for help in Discord <code>#omarchy-help</code></a><ul>
+<li><a href="#21-before-you-post">2.1 Before you post</a></li>
+<li><a href="#22-writing-the-title">2.2 Writing the title</a></li>
+<li><a href="#23-the-body-the-eight-essentials">2.3 The body: the eight essentials</a></li>
+<li><a href="#24-gathering-system-and-hardware-details">2.4 Gathering system and hardware details</a></li>
+<li><a href="#25-the-one-command-report-omarchy-debug">2.5 The one-command report: <code>omarchy debug</code></a></li>
+<li><a href="#26-copying-logs-and-error-output">2.6 Copying logs and error output</a></li>
+<li><a href="#27-screenshots-and-screen-recordings">2.7 Screenshots and screen recordings</a></li>
+<li><a href="#28-formatting-your-post-in-discord">2.8 Formatting your post in Discord</a></li>
+<li><a href="#29-etiquette-and-follow-through">2.9 Etiquette and follow-through</a></li>
+<li><a href="#210-copy-paste-template-for-omarchy-help">2.10 Copy-paste template for <code>#omarchy-help</code></a></li>
+<li><a href="#211-good-vs-bad-examples">2.11 Good vs. bad examples</a></li>
+</ul>
+</li>
+<li><a href="#3-filing-a-github-issue">3. Filing a GitHub issue</a><ul>
+<li><a href="#31-when-to-file-an-issue-and-when-not-to">3.1 When to file an issue (and when not to)</a></li>
+<li><a href="#32-what-omarchys-bug-template-asks-for">3.2 What Omarchy&#39;s bug template asks for</a></li>
+<li><a href="#33-anatomy-of-a-great-issue">3.3 Anatomy of a great issue</a></li>
+<li><a href="#34-gathering-diagnostics-for-an-issue">3.4 Gathering diagnostics for an issue</a></li>
+<li><a href="#35-building-a-minimal-reproduction-for-omarchy">3.5 Building a minimal reproduction for Omarchy</a></li>
+<li><a href="#36-attaching-logs-images-and-videos">3.6 Attaching logs, images, and videos</a></li>
+<li><a href="#37-titles-and-labels">3.7 Titles and labels</a></li>
+<li><a href="#38-filing-with-the-gh-cli">3.8 Filing with the <code>gh</code> CLI</a></li>
+<li><a href="#39-conduct-and-follow-through">3.9 Conduct and follow-through</a></li>
+<li><a href="#310-copy-paste-template-for-a-github-issue">3.10 Copy-paste template for a GitHub issue</a></li>
+<li><a href="#311-good-vs-bad-examples">3.11 Good vs. bad examples</a></li>
+</ul>
+</li>
+<li><a href="#appendix-a-command-quick-reference">Appendix A: Command quick reference</a></li>
+<li><a href="#appendix-b-where-to-find-logs">Appendix B: Where to find logs</a></li>
+<li><a href="#appendix-c-sources-and-further-reading">Appendix C: Sources and further reading</a></li>
+</ul>
+<hr>
+<h2 id="0-where-should-i-ask">0. Where should I ask?</h2>
+<p>Omarchy keeps its channels deliberately separate. Using the wrong one gets your
+request closed or ignored, not because people are unkind but because the
+maintainers use these queues for different jobs.</p>
+<table>
+<thead>
+<tr>
+<th>Your situation</th>
+<th>Go here</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>&quot;How do I…?&quot;, &quot;Is this expected?&quot;, &quot;Something&#39;s off but I&#39;m not sure it&#39;s a bug&quot;</td>
+<td>Discord <strong><code>#omarchy-help</code></strong></td>
+</tr>
+<tr>
+<td>A bug you can reproduce on the latest version, in Omarchy itself</td>
+<td><strong>GitHub issue</strong></td>
+</tr>
+<tr>
+<td>A feature idea, change to an existing feature, or other suggestion</td>
+<td><strong>GitHub Discussions → Suggestions</strong></td>
+</tr>
+<tr>
+<td>A security vulnerability</td>
+<td>Follow the repository&#39;s private security-reporting policy (do not post publicly)</td>
+</tr>
+<tr>
+<td>A question about an app Omarchy merely <em>ships</em> (e.g. a browser, an editor)</td>
+<td>That app&#39;s own support channel first</td>
+</tr>
+</tbody></table>
+<p>The rules of thumb:</p>
+<ul>
+<li><strong>Discord is the front door.</strong> Most &quot;bugs&quot; are configuration mistakes,
+hardware quirks, or misunderstandings. Discord is where those get sorted out
+and where a real bug gets confirmed.</li>
+<li><strong>GitHub issues are for verified bugs only.</strong> Omarchy&#39;s own bug template says
+it plainly: <em>&quot;Report a validated bug — NOT FOR SUPPORT REQUESTS.&quot;</em> GitHub
+Discussions is for suggestions; the Discord is for support.</li>
+<li><strong>When in doubt, start in Discord.</strong> If it turns out to be a genuine bug,
+someone will tell you to file it, and you&#39;ll already have collected everything
+you need.</li>
+</ul>
+<p>Official links:</p>
+<ul>
+<li>Discord: <a href="https://omarchy.org/discord">https://omarchy.org/discord</a></li>
+<li>Repository: <a href="https://github.com/omacom/omarchy">https://github.com/omacom/omarchy</a> (the older
+<code>github.com/basecamp/omarchy</code> link redirects here)</li>
+<li>Discussions: <a href="https://github.com/omacom/omarchy/discussions">https://github.com/omacom/omarchy/discussions</a></li>
+</ul>
+<hr>
+<h2 id="1-the-universal-rules-read-these-once">1. The universal rules (read these once)</h2>
+<p>These apply to a Discord post, a GitHub issue, and almost any technical help
+request anywhere.</p>
+<ol>
+<li><strong>Reproduce it.</strong> A bug that cannot be reproduced can rarely be fixed. If you
+can reproduce it reliably, say so and give the steps. If it is intermittent,
+say how often and what seems to influence it.</li>
+<li><strong>Minimize it.</strong> Strip away everything that is not needed to trigger the
+problem. The smaller the example, the faster someone finds the cause.</li>
+<li><strong>Search first.</strong> Search the Discord and the existing GitHub issues before
+posting. If it has been asked and answered, you save everyone time. If it has
+been reported but is unsolved, add your details to the existing thread
+instead of opening a duplicate.</li>
+<li><strong>Be precise, not verbose.</strong> Volume is not precision. &quot;It doesn&#39;t work&quot; and a
+40-line dump of unrelated logs are equally unhelpful. Give the exact error
+text, the exact command, and the exact result.</li>
+<li><strong>Report symptoms, not guesses.</strong> Describe what you observed. If you have a
+theory, label it clearly as a theory (&quot;I suspect the NVIDIA driver, but I
+haven&#39;t confirmed it&quot;).</li>
+<li><strong>One problem per post or issue.</strong> Do not bundle three unrelated bugs into
+one report. It makes them impossible to track and close.</li>
+<li><strong>Show your homework.</strong> List what you already tried and what happened. This
+proves you are not wasting a volunteer&#39;s time and often reveals the answer
+on its own.</li>
+<li><strong>Follow up.</strong> Reply when you get more information, say thank you, and — most
+importantly — post the solution when it is found, so the next person finds it.</li>
+</ol>
+<p>The single best question to ask yourself before submitting: <em>&quot;Could a stranger
+with the same hardware and software reproduce this using only what I&#39;ve
+written?&quot;</em> If not, add what is missing.</p>
+<hr>
+<h2 id="2-asking-for-help-in-discord-omarchy-help">2. Asking for help in Discord <code>#omarchy-help</code></h2>
+<p><code>#omarchy-help</code> is a <strong>forum channel</strong>. That means each request becomes its own
+post with a <strong>title</strong> and a <strong>body</strong>, rather than scrolling away in a busy chat.
+This is a gift: your post stays findable, and you can be replied to in a thread.
+Use it well.</p>
+<p>A complete first post typically gets a useful answer without any back-and-forth.
+An incomplete one triggers a slow game of &quot;what GPU do you have?&quot; — so put the
+details in up front.</p>
+<h3 id="21-before-you-post">2.1 Before you post</h3>
+<p>Spend five minutes here. It is the highest-leverage five minutes in the whole
+process.</p>
+<ul>
+<li><strong>Search the channel.</strong> Discord&#39;s search (and <code>Ctrl</code>/<code>Cmd</code>+<code>F</code>) can find
+previous posts. Read the pinned messages — they exist for a reason.</li>
+<li><strong>Check the docs and the CLI.</strong> Omarchy is self-documenting:<pre><code class="language-bash">omarchy commands          # list every documented command and summary
+omarchy &lt;group&gt; --help    # e.g. omarchy theme --help
+omarchy &lt;cmd&gt; --help      # e.g. omarchy debug --help
+</code></pre>
+</li>
+<li><strong>Try the obvious fixes</strong>, and note which ones you tried:<ul>
+<li>Reboot (rules out transient state).</li>
+<li><code>omarchy update</code> — is the problem already fixed in the latest version?</li>
+<li><code>omarchy restart shell</code> — restarts the status bar / notification shell.</li>
+<li><code>hyprctl reload</code> then <code>hyprctl configerrors</code> — reload and check Hyprland
+config for errors.</li>
+<li>If you recently changed a config, theme, hook, or plugin, revert it and see
+whether the problem disappears. That alone often identifies the culprit.</li>
+</ul>
+</li>
+<li><strong>Note what changed.</strong> An update, a new theme, a new monitor, a new package, a
+config edit — recent changes are the most common cause.</li>
+<li><strong>Get the version.</strong> <code>omarchy version</code>. Never say &quot;the latest&quot; — it means
+nothing and will be the first thing you&#39;re asked.</li>
+</ul>
+<h3 id="22-writing-the-title">2.2 Writing the title</h3>
+<p>The title is your one chance to attract the person who knows the answer. A good
+title names <strong>the object</strong> and <strong>the deviation</strong> from expected behavior, in about
+60 characters or fewer.</p>
+<table>
+<thead>
+<tr>
+<th>Good</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>External monitor goes black after suspend on NVIDIA</code></td>
+<td>Names object (external monitor) + trigger (suspend) + hardware</td>
+</tr>
+<tr>
+<td><code>Bar clock shows wrong timezone after update to 4.0.4</code></td>
+<td>Specific, searchable, versioned</td>
+</tr>
+<tr>
+<td><code>Super+Return opens two terminals after adding keybinding</code></td>
+<td>Names the exact keybinding and the symptom</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>Bad</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>HELP!!!</code></td>
+<td>Says nothing, gets ignored</td>
+</tr>
+<tr>
+<td><code>Omarchy is broken</code></td>
+<td>No object, no deviation</td>
+</tr>
+<tr>
+<td><code>Problem with my computer</code></td>
+<td>Unsearchable and unactionable</td>
+</tr>
+<tr>
+<td><code>Can someone help me please?</code></td>
+<td>Asking to ask</td>
+</tr>
+</tbody></table>
+<h3 id="23-the-body-the-eight-essentials">2.3 The body: the eight essentials</h3>
+<p>A strong body answers these eight questions. You do not need eight headings, but
+every answer should be somewhere in the post.</p>
+<ol>
+<li><strong>Goal / what you were doing.</strong> The task you were trying to accomplish and
+the steps you took. Describe the goal, not just the step you are stuck on.</li>
+<li><strong>What actually happened.</strong> The observed result. Include exact error text
+verbatim.</li>
+<li><strong>What you expected to happen.</strong> Concrete and specific.</li>
+<li><strong>Steps to reproduce.</strong> Numbered, from a known starting state. State whether
+it happens <em>every time</em>, <em>sometimes</em>, or <em>once</em>. Include any special setup.</li>
+<li><strong>System and hardware details.</strong> See <a href="#24-gathering-system-and-hardware-details">2.4</a>.</li>
+<li><strong>Logs and error output.</strong> See <a href="#26-copying-logs-and-error-output">2.6</a>.</li>
+<li><strong>What you already tried.</strong> And the result of each attempt.</li>
+<li><strong>When it started / what changed.</strong> Did it work before? After which update,
+change, or event did it break?</li>
+</ol>
+<p>Optional but valuable: a <strong>screenshot or short recording</strong> for anything visual
+(<a href="#27-screenshots-and-screen-recordings">2.7</a>), and any <strong>workaround</strong> you found.</p>
+<h3 id="24-gathering-system-and-hardware-details">2.4 Gathering system and hardware details</h3>
+<p>Always include the <strong>Omarchy version</strong>. Add hardware details that are plausibly
+related to the problem — for graphics, audio, monitors, suspend, Wi-Fi, and
+input issues, hardware is usually the whole story.</p>
+<pre><code class="language-bash">omarchy version          # exact Omarchy version, e.g. 4.0.4-1
+uname -r                 # kernel version (matters for hardware/driver issues)
+inxi -Farz               # full system summary: CPU, GPU, RAM, disks, network
+fastfetch                # pretty one-screen overview (alias: omarchy launch about)
+</code></pre>
+<p>When relevant, also collect:</p>
+<pre><code class="language-bash"># GPU and its kernel driver
+lspci -nnk | grep -A3 -iE &#39;vga|3d|display&#39;
+
+# USB devices (input, audio, webcams, dongles)
+lsusb
+
+# Hyprland / compositor
+hyprctl version
+hyprctl monitors         # resolution, refresh rate, scale per output
+</code></pre>
+<p>A compact hardware line that belongs in almost every post:</p>
+<blockquote>
+<p><code>Omarchy 4.0.4-1, kernel 6.12.5, AMD Ryzen 9 9950X, NVIDIA RTX 5090 (proprietary driver 570), two 27&quot; 4K monitors @ 144Hz, Hyprland 0.56</code></p>
+</blockquote>
+<p>If you cannot run <code>inxi</code> or <code>fastfetch</code>, the <code>omarchy debug</code> report below
+includes <code>inxi -Farz</code> for you.</p>
+<h3 id="25-the-one-command-report-omarchy-debug">2.5 The one-command report: <code>omarchy debug</code></h3>
+<p>This is the single most useful thing you can attach. It gathers the information
+people ask for most often into one file.</p>
+<pre><code class="language-bash"># Print the report to the terminal and save it to /tmp/omarchy-debug.log.
+# ALWAYS use --no-sudo --print in a scripted/non-interactive context so it
+# never hangs waiting for a sudo password prompt.
+omarchy debug --no-sudo --print
+</code></pre>
+<p>The report contains:</p>
+<ul>
+<li>Date, hostname, and the installed Omarchy package version</li>
+<li><code>inxi -Farz</code> — full system, CPU, GPU, memory, and disk information</li>
+<li><code>dmesg</code> (skipped when <code>--no-sudo</code> is used)</li>
+<li><code>journalctl -b -p 4..1</code> — all warnings and errors from the current boot</li>
+<li>The full installed package list, including AUR packages</li>
+</ul>
+<p><strong>Sharing it:</strong></p>
+<ul>
+<li>Run <code>omarchy debug</code> <strong>without</strong> <code>--no-sudo --print</code> and it offers to
+<strong>upload the log to <code>logs.omarchy.org</code></strong> (the link expires after 24 hours) and
+prints a shareable URL. That URL is perfect for a Discord post or GitHub issue.</li>
+<li>Or choose &quot;Save in current directory&quot; to get <code>./omarchy-debug.log</code> and attach
+the file.</li>
+</ul>
+<blockquote>
+<p>Privacy note: this report includes your hostname, package list, and hardware
+serial-ish details. Skim it before posting publicly. It does <strong>not</strong> include
+your files.</p>
+</blockquote>
+<h3 id="26-copying-logs-and-error-output">2.6 Copying logs and error output</h3>
+<p>Start with <code>omarchy debug</code> (<a href="#25-the-one-command-report-omarchy-debug">2.5</a>).
+For anything it does not cover, use the sources below.</p>
+<p><strong>Journal (systemd) — the general-purpose log:</strong></p>
+<pre><code class="language-bash">journalctl -b -p 3                 # errors from the current boot
+journalctl -b -p 4..1              # warnings + errors from the current boot
+journalctl --since &quot;10 min ago&quot;    # a time window around the problem
+journalctl -u &lt;unit&gt;               # a specific system service
+journalctl --user -u &lt;unit&gt;        # a specific user service
+journalctl -f                      # follow live, then reproduce the issue
+journalctl -k -b                   # kernel messages this boot (dmesg equivalent)
+</code></pre>
+<p>For a bug that happens <em>now</em>, reproduce it while <code>journalctl -f</code> is running, then
+copy the lines around the failure.</p>
+<p><strong>Hyprland (the compositor):</strong></p>
+<pre><code class="language-bash">hyprctl configerrors               # config parse errors — check this first
+hyprctl monitors                   # output configuration
+hyprctl clients                    # open windows and their properties
+</code></pre>
+<p>Hyprland&#39;s runtime log lives at:</p>
+<pre><code>$XDG_RUNTIME_DIR/hypr/$HYPRLAND_INSTANCE_SIGNATURE/hyprland.log
+</code></pre>
+<p><strong>Omarchy shell / bar (Quickshell):</strong> the shell logs to the journal, so filter
+the user journal around the time of the problem:</p>
+<pre><code class="language-bash">journalctl --user -b -p 4..1 | grep -iE &#39;qs|quickshell|omarchy&#39;
+omarchy restart shell              # restart it, then re-check the journal
+</code></pre>
+<p><strong>Screen recording failures:</strong> rerun with debug enabled and attach the log:</p>
+<pre><code class="language-bash">OMARCHY_SCREENRECORD_DEBUG=true omarchy screenrecord --fullscreen
+# ... reproduce ...
+omarchy screenrecord --stop-recording
+# then attach /tmp/omarchy-screenrecord.log
+</code></pre>
+<p><strong>Crashes / process disappeared:</strong></p>
+<pre><code class="language-bash">coredumpctl list                   # recently crashed processes
+coredumpctl info &lt;pid|name&gt;        # details for one crash
+coredumpctl gdb &lt;pid|name&gt;         # load it in gdb for a backtrace
+</code></pre>
+<p>Omarchy can also help: <code>omarchy crash watch</code> watches for crashes, and clicking a
+crash notification (or running <code>omarchy agent crash &lt;pid&gt;</code>) offers an AI
+diagnosis. <code>omarchy toggle crash capture</code> toggles the notifications.</p>
+<p><strong>Update failures:</strong></p>
+<pre><code class="language-bash">omarchy update analyze logs        # check the update log for known failures
+</code></pre>
+<p><strong>Copying text out of a terminal:</strong></p>
+<ul>
+<li>Select with the mouse and copy. Most Omarchy terminals copy on selection;
+<code>Ctrl</code>+<code>Shift</code>+<code>C</code> is the usual explicit shortcut.</li>
+<li>Redirect any command to a file: <code>some-command &gt; /tmp/out.log 2&gt;&amp;1</code></li>
+<li>If the text is only visible as pixels (a graphical error dialog, a game
+overlay), use OCR to grab it: <code>omarchy capture text</code> — select the region and
+the text lands on your clipboard.</li>
+<li>Save a screenshot to disk: <code>omarchy capture screenshot region save</code>.</li>
+</ul>
+<h3 id="27-screenshots-and-screen-recordings">2.7 Screenshots and screen recordings</h3>
+<p>For visual bugs — rendering glitches, a bar that overlaps, a window that won&#39;t
+tile, a flicker — a capture is worth a thousand words.</p>
+<pre><code class="language-bash">omarchy screenshot                              # smart interactive flow
+omarchy capture screenshot region               # select a region
+omarchy capture screenshot windows              # pick a window
+omarchy capture screenshot fullscreen save      # straight to disk, prints path
+
+omarchy screenrecord --fullscreen               # start recording
+# ...reproduce the problem on camera...
+omarchy screenrecord --stop-recording           # stop, prints the saved path
+</code></pre>
+<p>Keep recordings <strong>short and focused</strong> on the misbehavior — a 10-second clip
+beats a 5-minute one. Shrink large files before sharing with
+<code>omarchy transcode &lt;input&gt;</code>. See <a href="#28-formatting-your-post-in-discord">2.8</a> for
+how to attach them.</p>
+<h3 id="28-formatting-your-post-in-discord">2.8 Formatting your post in Discord</h3>
+<p>How you present information determines whether people read it.</p>
+<ul>
+<li><p><strong>Use code blocks for logs and commands.</strong> Triple backticks, with a language
+tag for highlighting:</p>
+<pre><code>```bash
+omarchy version
+```
+</code></pre>
+<p>Use <code>bash</code>, <code>log</code>, or <code>text</code>. Without a code block, Discord mangles
+indentation and turns <code>#</code> into headings.</p>
+</li>
+<li><p><strong>Do not screenshot text.</strong> Screenshots of error messages cannot be searched,
+copied, or quoted. Paste the text. Reserve screenshots for genuinely visual
+problems.</p>
+</li>
+<li><p><strong>Keep it short; attach the long parts.</strong> Paste the few relevant lines inline
+and attach the full log as a file, or use the <code>logs.omarchy.org</code> URL from
+<code>omarchy debug</code>. Nobody reads a 500-line wall.</p>
+</li>
+<li><p><strong>Paste only the relevant config.</strong> If you edited a config file, paste the
+relevant lines (or a diff), not the entire file.</p>
+</li>
+<li><p><strong>Redact secrets.</strong> Remove tokens, API keys, email addresses, MAC addresses,
+IPs, serial numbers, and file paths that reveal personal information. Keep the
+technical structure visible so the log is still useful.</p>
+</li>
+<li><p><strong>Write in clear English.</strong> Short sentences, correct spelling, no walls of
+unbroken text. Non-native English is completely fine; just be precise.</p>
+</li>
+</ul>
+<h3 id="29-etiquette-and-follow-through">2.9 Etiquette and follow-through</h3>
+<ul>
+<li><strong>Don&#39;t ask to ask.</strong> &quot;Can anyone help?&quot; accomplishes nothing. Post your
+complete question in the first message.</li>
+<li><strong>Don&#39;t ping.</strong> No <code>@here</code>, <code>@everyone</code>, or DMing helpers. It is rude and
+counterproductive.</li>
+<li><strong>Don&#39;t mark it urgent.</strong> Everyone&#39;s problem feels urgent to them; volunteers
+are not an on-demand service.</li>
+<li><strong>Be patient with time zones.</strong> The person who knows the answer may be asleep.
+Post, then check back later. Don&#39;t bump repeatedly.</li>
+<li><strong>Stay on topic and in one place.</strong> Don&#39;t hijack someone else&#39;s post, and
+don&#39;t cross-post the same question in several channels.</li>
+<li><strong>Respond when asked for more info.</strong> The sooner you provide it, the sooner
+you&#39;re helped.</li>
+<li><strong>Mark the solution.</strong> When your post is solved, reply with the fix and use the
+forum&#39;s <strong>Mark Solution</strong> action on the helpful reply. This makes the answer
+findable for everyone who comes later.</li>
+<li><strong>Close the loop.</strong> A short &quot;thanks, that fixed it&quot; costs nothing. If you
+solved it yourself, post how.</li>
+</ul>
+<h3 id="210-copy-paste-template-for-omarchy-help">2.10 Copy-paste template for <code>#omarchy-help</code></h3>
+<p>Copy this into your post and fill in the blanks. Delete anything that does not
+apply.</p>
+<pre><code class="language-markdown">**Title:** &lt;object&gt; — &lt;deviation&gt;  (e.g. &quot;External monitor goes black after suspend on NVIDIA&quot;)
+
+**What I was trying to do**
+...
+
+**What happened**
+...
+
+**What I expected**
+...
+
+**Steps to reproduce**
+1.
+2.
+3.
+Frequency: always / sometimes / once
+
+**System / hardware**
+- Omarchy: &lt;output of `omarchy version`&gt;
+- Kernel: &lt;output of `uname -r`&gt;
+- CPU / GPU: ...
+- Monitors / other relevant hardware: ...
+
+**Logs / errors**
+```log
+&lt;paste the relevant lines here&gt;
+```
+Full `omarchy debug` report: &lt;logs.omarchy.org URL or attached file&gt;
+
+**What I already tried**
+- ...
+
+**When it started / what changed**
+...
+
+**Extra**
+Screenshot/recording: &lt;attach&gt;
+</code></pre>
+<h3 id="211-good-vs-bad-examples">2.11 Good vs. bad examples</h3>
+<p><strong>Bad post</strong></p>
+<blockquote>
+<p><strong>Title:</strong> help</p>
+<p>Hi, my omarchy is broken, the screen keeps messing up after I close my laptop.
+I tried stuff but nothing works. Can someone help me? I really need this fixed
+today. Also sometimes the bar disappears.</p>
+</blockquote>
+<p>Problems: no version, no hardware, no steps, no logs, vague symptom
+(&quot;messing up&quot;), multiple issues in one post, urgency, no evidence of any
+troubleshooting.</p>
+<p><strong>Good post</strong></p>
+<blockquote>
+<p><strong>Title:</strong> External monitor goes black after suspend on NVIDIA, requires replug</p>
+<p><strong>What I was trying to do:</strong> Use an external 4K monitor with my laptop and
+suspend/resume it.</p>
+<p><strong>What happened:</strong> After resuming from suspend, the external monitor is black
+but the laptop panel works. <code>hyprctl monitors</code> still lists it at the right
+resolution. Unplugging and replugging the cable fixes it until the next
+suspend. Happens every time.</p>
+<p><strong>Expected:</strong> Both monitors come back after resume.</p>
+<p><strong>Steps to reproduce:</strong></p>
+<ol>
+<li>Connect the monitor over DisplayPort.</li>
+<li><code>systemctl suspend</code>, then wake the machine.</li>
+<li>External monitor is black.</li>
+</ol>
+<p><strong>System / hardware:</strong></p>
+<ul>
+<li>Omarchy: <code>4.0.4-1</code></li>
+<li>Kernel: <code>6.12.5-arch1-1</code></li>
+<li>CPU/GPU: Ryzen 9 9950X / NVIDIA RTX 5090, driver <code>570.86.16</code> (proprietary)</li>
+<li>Monitor: Dell U2723QE @ 4K/60Hz over DP</li>
+</ul>
+<p><strong>Logs:</strong></p>
+<pre><code class="language-log">&lt;relevant `journalctl -b` lines around resume&gt;
+</code></pre>
+<p>Full report: &lt;logs.omarchy.org/...&gt;</p>
+<p><strong>What I already tried:</strong> <code>hyprctl reload</code> (no change); switching to a TTY and
+back (no change); <code>omarchy update</code> (already current); reverting my only custom
+Hyprland keybinding (no change).</p>
+<p><strong>When it started:</strong> After the 4.0.4 update; worked on 4.0.3.</p>
+<p><strong>Extra:</strong> 8-second recording attached showing the black screen and the
+replug fix.</p>
+</blockquote>
+<p>This post can be triaged immediately.</p>
+<hr>
+<h2 id="3-filing-a-github-issue">3. Filing a GitHub issue</h2>
+<p>GitHub issues are the permanent, searchable record of a confirmed bug. They are
+the right tool <strong>only</strong> once a problem has been reproduced and confirmed to be a
+bug in Omarchy itself.</p>
+<h3 id="31-when-to-file-an-issue-and-when-not-to">3.1 When to file an issue (and when not to)</h3>
+<p><strong>File an issue when:</strong></p>
+<ul>
+<li>You can reproduce the problem on the latest version.</li>
+<li>It is a bug in Omarchy (its scripts, configs, themes, shell, installer, or
+migrations), not a misconfiguration or a third-party app.</li>
+<li>You searched the existing issues and did not find it.</li>
+</ul>
+<p><strong>Do not file an issue for:</strong></p>
+<ul>
+<li>Support questions, &quot;how do I…&quot;, or &quot;is this a bug?&quot; → Discord <code>#omarchy-help</code>.</li>
+<li>Feature ideas and suggestions → GitHub Discussions → Suggestions.</li>
+<li>A bug in an upstream project Omarchy merely ships (a browser, a text editor,
+a library). Report it upstream first; only file with Omarchy if Omarchy&#39;s
+packaging/config is at fault.</li>
+<li>The same bug that already has an open issue — <strong>add your details to the
+existing issue</strong> instead. Duplicates get closed and split the discussion.</li>
+</ul>
+<p>The repository disables blank issues and routes Suggestions and Support through
+its template chooser, so you will be pointed to the right place automatically.</p>
+<h3 id="32-what-omarchys-bug-template-asks-for">3.2 What Omarchy&#39;s bug template asks for</h3>
+<p>Omarchy&#39;s bug template is intentionally short. It asks for two things:</p>
+<ol>
+<li><strong>System details</strong> — required. For example:
+<code>AMD 9950X, NVIDIA 5090, Omarchy 2.1.0</code></li>
+<li><strong>What&#39;s wrong?</strong> — required. Describe the issue, include steps to recreate it
+if possible, and attach the output of <code>omarchy debug</code> if possible.</li>
+</ol>
+<p>The template header reminds you that <em>&quot;Omarchy is an open source gift, not a
+product you bought from a vendor.&quot;</em> Keep that in mind throughout.</p>
+<p>Because the template is minimal, the quality of your issue is entirely up to how
+much of the structure below you include. A great issue goes well beyond the two
+required fields.</p>
+<h3 id="33-anatomy-of-a-great-issue">3.3 Anatomy of a great issue</h3>
+<table>
+<thead>
+<tr>
+<th>Element</th>
+<th>What it answers</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Title</strong></td>
+<td>What is broken, specifically</td>
+<td><code>Bar workspace indicator stops updating after theme change</code></td>
+</tr>
+<tr>
+<td><strong>System details</strong></td>
+<td>On what hardware/version</td>
+<td><code>Framework 13 (AMD 7840U), Omarchy 4.0.4-1, kernel 6.12.5</code></td>
+</tr>
+<tr>
+<td><strong>Summary</strong></td>
+<td>One-paragraph description</td>
+<td>What is broken and in what context</td>
+</tr>
+<tr>
+<td><strong>Steps to reproduce</strong></td>
+<td>How to trigger it</td>
+<td>Numbered, minimal, from a clean state</td>
+</tr>
+<tr>
+<td><strong>Expected result</strong></td>
+<td>What should happen</td>
+<td>Concrete</td>
+</tr>
+<tr>
+<td><strong>Actual result</strong></td>
+<td>What does happen</td>
+<td>Verbatim error text, separate from speculation</td>
+</tr>
+<tr>
+<td><strong>Frequency</strong></td>
+<td>Always / sometimes / once</td>
+<td>&quot;Every time&quot; or &quot;~1 in 5 resumes&quot;</td>
+</tr>
+<tr>
+<td><strong>Diagnostics</strong></td>
+<td>The evidence</td>
+<td><code>omarchy debug</code> output or <code>logs.omarchy.org</code> URL</td>
+</tr>
+<tr>
+<td><strong>Minimal reproduction</strong></td>
+<td>The smallest failing case</td>
+<td>A config diff, exact commands, a theme file</td>
+</tr>
+<tr>
+<td><strong>Regression info</strong></td>
+<td>When it broke</td>
+<td>&quot;Worked on 4.0.3, broken on 4.0.4&quot; (or <code>git bisect</code> result)</td>
+</tr>
+<tr>
+<td><strong>Workaround</strong></td>
+<td>Any way around it</td>
+<td>&quot;Reverting the theme fixes it&quot;</td>
+</tr>
+<tr>
+<td><strong>Captures</strong></td>
+<td>Visual evidence</td>
+<td>Short recording or annotated screenshot</td>
+</tr>
+</tbody></table>
+<p>Write the issue so a maintainer can reproduce it <strong>without asking you a single
+follow-up question</strong>.</p>
+<h3 id="34-gathering-diagnostics-for-an-issue">3.4 Gathering diagnostics for an issue</h3>
+<p>The tools are the same as for Discord; the difference is that a GitHub issue
+should be self-contained and permanent.</p>
+<pre><code class="language-bash"># 1. Exact versions
+omarchy version
+uname -r
+
+# 2. The full diagnostic report (also written to /tmp/omarchy-debug.log)
+omarchy debug --no-sudo --print
+
+# 3. For a shareable, permanent-ish link: run the interactive form and choose
+#    &quot;Upload log&quot;. It uploads to logs.omarchy.org (link expires after 24h) and
+#    prints a URL you can paste into the issue.
+omarchy debug
+</code></pre>
+<p>Then add the specific evidence for your bug:</p>
+<ul>
+<li><strong>Logs:</strong> the relevant <code>journalctl</code> window, the Hyprland log, the shell journal
+— see <a href="#26-copying-logs-and-error-output">2.6</a>.</li>
+<li><strong>Crashes:</strong> <code>coredumpctl info &lt;pid|name&gt;</code>, or the output of
+<code>omarchy agent crash &lt;pid&gt;</code>.</li>
+<li><strong>Update problems:</strong> <code>omarchy update analyze logs</code>.</li>
+<li><strong>Screen-recording failures:</strong> <code>OMARCHY_SCREENRECORD_DEBUG=true</code> and attach
+<code>/tmp/omarchy-screenrecord.log</code>.</li>
+</ul>
+<p>Because <code>logs.omarchy.org</code> links expire in 24 hours, <strong>also paste the key lines
+inline</strong> or attach the log file to the issue so the evidence survives.</p>
+<h3 id="35-building-a-minimal-reproduction-for-omarchy">3.5 Building a minimal reproduction for Omarchy</h3>
+<p>A minimal reproduction is the most valuable thing in any bug report. For
+Omarchy, it usually takes one of these forms:</p>
+<ul>
+<li><strong>Config bug:</strong> paste the exact change you made (a diff or the relevant lines
+from <code>~/.config/...</code>), and say whether the bug still happens after
+<code>omarchy refresh &lt;app&gt;</code> (which restores defaults). If stock config is fine and
+only your edit breaks it, say so — that narrows it enormously.</li>
+<li><strong>Theme / hook / plugin bug:</strong> include the custom theme directory, hook
+script, or plugin file. Note whether the stock theme/behavior works, and
+whether the bug appears only with yours.</li>
+<li><strong>Command bug:</strong> give the exact command and its full output:<pre><code class="language-bash">omarchy some-command --flag
+# full output below
+</code></pre>
+</li>
+<li><strong>Keybinding bug:</strong> give the binding you added and the exact keys, and note
+whether a conflicting stock binding exists.</li>
+<li><strong>Hardware bug:</strong> state the hardware precisely (model, driver, connection
+type). Hardware bugs are often not reproducible on the maintainer&#39;s machine,
+so detail is everything.</li>
+</ul>
+<p>Minimize by removing everything unrelated. If you can trigger the bug with one
+line of config and one command, you have a reproduction that will get fixed.</p>
+<h3 id="36-attaching-logs-images-and-videos">3.6 Attaching logs, images, and videos</h3>
+<ul>
+<li><strong>Web form:</strong> drag and drop files directly into the issue body. This works for
+images and videos. Prefer a short recording for visual bugs.</li>
+<li><strong><code>gh</code> CLI:</strong> <code>gh issue create</code> <strong>cannot upload images or other files.</strong> If you
+file from the terminal, either (a) paste text logs inline and use the
+<code>logs.omarchy.org</code> URL, or (b) create the issue with <code>gh</code>, then open it in the
+browser and drag-and-drop the captures into a follow-up comment.</li>
+<li><strong>Large text logs:</strong> attach a <code>.log</code> file, or use the <code>logs.omarchy.org</code>
+upload. Do not paste thousands of lines inline.</li>
+<li><strong>Redact secrets</strong> before attaching. Logs can contain usernames, tokens,
+paths, emails, and machine identifiers. Remove the sensitive values but keep
+enough structure that the log is still readable.</li>
+</ul>
+<h3 id="37-titles-and-labels">3.7 Titles and labels</h3>
+<ul>
+<li>Use the <strong>object — deviation</strong> convention from
+<a href="#22-writing-the-title">2.2</a>. A title like <code>Export fails when filename contains an emoji</code> is triaged fast; <code>It&#39;s broken</code> is not.</li>
+<li>Do not editorialize (&quot;terrible bug&quot;) or prescribe a fix in the title. Describe
+the problem.</li>
+<li>Labels such as <code>bug</code> are applied by maintainers — you generally do not need to
+set them. The template applies <code>bug</code> automatically.</li>
+</ul>
+<h3 id="38-filing-with-the-gh-cli">3.8 Filing with the <code>gh</code> CLI</h3>
+<p>The GitHub CLI is the fastest way to search, file, and follow up.</p>
+<pre><code class="language-bash"># Search existing issues first — avoid duplicates
+gh search issues --repo omacom/omarchy &quot;external monitor suspend&quot;
+gh issue list --repo omacom/omarchy --state open --search &quot;monitor black&quot;
+
+# File a new issue from a prepared body file (write it once, reuse it)
+gh issue create --repo omacom/omarchy \
+  --title &quot;External monitor goes black after suspend on NVIDIA&quot; \
+  --body-file /tmp/issue.md
+
+# Follow up
+gh issue view &lt;number&gt; --repo omacom/omarchy
+gh issue comment &lt;number&gt; --repo omacom/omarchy --body &quot;Additional info: ...&quot;
+</code></pre>
+<p>Prepare the body with the template in
+<a href="#310-copy-paste-template-for-a-github-issue">3.10</a>. Remember that media must be
+attached through the web UI afterwards.</p>
+<h3 id="39-conduct-and-follow-through">3.9 Conduct and follow-through</h3>
+<ul>
+<li><strong>Write in English.</strong> Issues are read by maintainers and users worldwide.</li>
+<li><strong>Be civil and patient.</strong> Maintainers are volunteers; Omarchy is a gift, not a
+product. Demanding a fix, an ETA, or immediate attention will not help.</li>
+<li><strong>Don&#39;t spam &quot;any update?&quot;.</strong> If you have new information, add it. If not, wait.</li>
+<li><strong>Respond to requests for information.</strong> An issue that goes quiet without the
+requested logs may be closed as unreproducible.</li>
+<li><strong>Stay on one issue.</strong> If you discover a second, unrelated bug, file a second
+issue.</li>
+<li><strong>Report the outcome.</strong> If a workaround or a fix solves it, comment with the
+details, then close the issue (or let a maintainer close it).</li>
+<li><strong>Contribute a fix if you can.</strong> Fork the repo and open a PR rather than
+editing <code>/usr/share/omarchy/</code> on your machine — the packaged files are
+overwritten on update. Follow the repository&#39;s <code>AGENTS.md</code> and run
+<code>./test/all</code> before pushing. A PR that fixes a visual bug should include
+before/after captures.</li>
+</ul>
+<h3 id="310-copy-paste-template-for-a-github-issue">3.10 Copy-paste template for a GitHub issue</h3>
+<pre><code class="language-markdown">### System details
+
+- Omarchy: &lt;`omarchy version`&gt;
+- Kernel: &lt;`uname -r`&gt;
+- CPU / GPU: ...
+- Relevant hardware (monitors, audio, Wi-Fi, input, laptop model): ...
+
+### What&#39;s wrong?
+
+&lt;One-paragraph summary.&gt;
+
+### Steps to reproduce
+
+1.
+2.
+3.
+
+Frequency: always / sometimes / once
+
+### Expected result
+
+...
+
+### Actual result
+
+...
+```log
+&lt;verbatim error output / relevant log lines&gt;
+```
+
+### Diagnostics
+
+- Full `omarchy debug`: &lt;logs.omarchy.org URL&gt; and/or attached `omarchy-debug.log`
+- Relevant `journalctl` / Hyprland log lines: (above)
+
+### Minimal reproduction
+
+&lt;Exact config diff, command, or file needed to trigger the bug. State whether
+stock config/theme works.&gt;
+
+### Regression
+
+- Last known good version: ...
+- First known bad version: ...
+- `git bisect` result (if available): ...
+
+### Workaround
+
+...
+
+### Captures
+
+&lt;Attach a short recording or screenshot for visual bugs.&gt;
+</code></pre>
+<h3 id="311-good-vs-bad-examples">3.11 Good vs. bad examples</h3>
+<p><strong>Bad issue</strong></p>
+<blockquote>
+<p><strong>Title:</strong> Doesn&#39;t work</p>
+<p>Omarchy broke my audio. Fix it. I&#39;m on a Dell. I need this working for a
+meeting tomorrow. Please help ASAP.</p>
+</blockquote>
+<p>Problems: no version, no hardware detail, no logs, no reproduction, demands and
+urgency, filed as a bug when it is a support question.</p>
+<p><strong>Good issue</strong></p>
+<blockquote>
+<p><strong>Title:</strong> HDMI audio device disappears after plugging in USB-C dock</p>
+<p><strong>System details:</strong> Dell XPS 13 9340, Intel Core Ultra 7 155H, Intel Arc
+integrated graphics, Omarchy 4.0.4-1, kernel 6.12.5-arch1-1, PipeWire
+1.2.7.</p>
+<p><strong>What&#39;s wrong?:</strong> When I connect an Anker 555 USB-C dock, the built-in HDMI
+audio sink disappears from <code>wpctl status</code> and does not come back until I
+reboot. Reproducible every time.</p>
+<p><strong>Steps to reproduce:</strong> 1) Boot with no dock. 2) Confirm HDMI sink present in
+<code>wpctl status</code>. 3) Plug in the dock. 4) HDMI sink is gone.</p>
+<p><strong>Expected:</strong> Both the dock&#39;s audio and the HDMI audio remain available.</p>
+<p><strong>Actual:</strong> HDMI sink vanishes; only the dock and internal speakers remain.</p>
+<p><strong>Diagnostics:</strong> Full <code>omarchy debug</code> at &lt;logs.omarchy.org/...&gt;; attached
+<code>journalctl -b</code> excerpt around the plug event.</p>
+<p><strong>Regression:</strong> Worked on 4.0.3; first bad on 4.0.4.</p>
+<p><strong>Workaround:</strong> Rebooting with the dock attached keeps the sink available.</p>
+<p><strong>Captures:</strong> 15-second recording attached.</p>
+</blockquote>
+<p>This issue can be confirmed and fixed.</p>
+<hr>
+<h2 id="appendix-a-command-quick-reference">Appendix A: Command quick reference</h2>
+<table>
+<thead>
+<tr>
+<th>Goal</th>
+<th>Command</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Show Omarchy version</td>
+<td><code>omarchy version</code></td>
+</tr>
+<tr>
+<td>Kernel version</td>
+<td><code>uname -r</code></td>
+</tr>
+<tr>
+<td>Full diagnostic report</td>
+<td><code>omarchy debug --no-sudo --print</code></td>
+</tr>
+<tr>
+<td>Upload diagnostic report</td>
+<td><code>omarchy debug</code> → &quot;Upload log&quot;</td>
+</tr>
+<tr>
+<td>Full system summary</td>
+<td><code>inxi -Farz</code></td>
+</tr>
+<tr>
+<td>Pretty system overview</td>
+<td><code>fastfetch</code></td>
+</tr>
+<tr>
+<td>GPU + driver</td>
+<td><code>lspci -nnk | grep -A3 -iE &#39;vga|3d|display&#39;</code></td>
+</tr>
+<tr>
+<td>Hyprland version / outputs</td>
+<td><code>hyprctl version</code> / <code>hyprctl monitors</code></td>
+</tr>
+<tr>
+<td>Hyprland config errors</td>
+<td><code>hyprctl configerrors</code></td>
+</tr>
+<tr>
+<td>Reload Hyprland</td>
+<td><code>hyprctl reload</code></td>
+</tr>
+<tr>
+<td>Recent errors this boot</td>
+<td><code>journalctl -b -p 3</code></td>
+</tr>
+<tr>
+<td>Logs in a time window</td>
+<td><code>journalctl --since &quot;10 min ago&quot;</code></td>
+</tr>
+<tr>
+<td>Follow logs live</td>
+<td><code>journalctl -f</code></td>
+</tr>
+<tr>
+<td>Kernel messages</td>
+<td><code>journalctl -k -b</code></td>
+</tr>
+<tr>
+<td>Restart the shell/bar</td>
+<td><code>omarchy restart shell</code></td>
+</tr>
+<tr>
+<td>Restore a config to default</td>
+<td><code>omarchy refresh &lt;app&gt;</code></td>
+</tr>
+<tr>
+<td>Check update failures</td>
+<td><code>omarchy update analyze logs</code></td>
+</tr>
+<tr>
+<td>List crashed processes</td>
+<td><code>coredumpctl list</code></td>
+</tr>
+<tr>
+<td>Crash details</td>
+<td><code>coredumpctl info &lt;pid|name&gt;</code></td>
+</tr>
+<tr>
+<td>Screenshot (region)</td>
+<td><code>omarchy capture screenshot region</code></td>
+</tr>
+<tr>
+<td>Screen recording</td>
+<td><code>omarchy screenrecord --fullscreen</code> / <code>--stop-recording</code></td>
+</tr>
+<tr>
+<td>OCR text from screen</td>
+<td><code>omarchy capture text</code></td>
+</tr>
+<tr>
+<td>Shrink a capture</td>
+<td><code>omarchy transcode &lt;input&gt;</code></td>
+</tr>
+<tr>
+<td>Discover commands</td>
+<td><code>omarchy commands</code> / <code>omarchy &lt;group&gt; --help</code></td>
+</tr>
+</tbody></table>
+<h2 id="appendix-b-where-to-find-logs">Appendix B: Where to find logs</h2>
+<table>
+<thead>
+<tr>
+<th>What</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Everything Omarchy collects</td>
+<td><code>omarchy debug --no-sudo --print</code> → <code>/tmp/omarchy-debug.log</code></td>
+</tr>
+<tr>
+<td>System journal</td>
+<td><code>journalctl</code> (<code>-b</code>, <code>-p</code>, <code>--since</code>, <code>-u</code>)</td>
+</tr>
+<tr>
+<td>Kernel messages</td>
+<td><code>journalctl -k -b</code> (or <code>sudo dmesg</code>)</td>
+</tr>
+<tr>
+<td>Hyprland runtime log</td>
+<td><code>$XDG_RUNTIME_DIR/hypr/$HYPRLAND_INSTANCE_SIGNATURE/hyprland.log</code></td>
+</tr>
+<tr>
+<td>Hyprland config errors</td>
+<td><code>hyprctl configerrors</code></td>
+</tr>
+<tr>
+<td>Omarchy shell / bar</td>
+<td>user journal (<code>journalctl --user</code>)</td>
+</tr>
+<tr>
+<td>Screen recording</td>
+<td><code>/tmp/omarchy-screenrecord.log</code> (with <code>OMARCHY_SCREENRECORD_DEBUG=true</code>)</td>
+</tr>
+<tr>
+<td>Crashes</td>
+<td><code>coredumpctl info &lt;pid|name&gt;</code></td>
+</tr>
+<tr>
+<td>Update failures</td>
+<td><code>omarchy update analyze logs</code></td>
+</tr>
+<tr>
+<td>Screenshots</td>
+<td>configured Pictures directory (override: <code>OMARCHY_SCREENSHOT_DIR</code>)</td>
+</tr>
+<tr>
+<td>Screen recordings</td>
+<td>configured Videos directory (override: <code>OMARCHY_SCREENRECORD_DIR</code>)</td>
+</tr>
+</tbody></table>
+<h2 id="appendix-c-sources-and-further-reading">Appendix C: Sources and further reading</h2>
+<p>This guide distills established bug-reporting practice and Omarchy&#39;s own
+documentation:</p>
+<ul>
+<li>Omarchy Discord (support): <a href="https://omarchy.org/discord">https://omarchy.org/discord</a></li>
+<li>Omarchy repository and issue templates:
+<a href="https://github.com/omacom/omarchy">https://github.com/omacom/omarchy</a></li>
+<li>Arch Wiki, <em>Bug reporting guidelines</em>:
+<a href="https://wiki.archlinux.org/title/Bug_reporting_guidelines">https://wiki.archlinux.org/title/Bug_reporting_guidelines</a></li>
+<li>Mozilla, <em>Bug Writing Guidelines</em>:
+<a href="https://bugzilla.mozilla.org/page.cgi?id=bug-writing.html">https://bugzilla.mozilla.org/page.cgi?id=bug-writing.html</a></li>
+<li>Stack Overflow, <em>How to create a Minimal, Reproducible Example</em>:
+<a href="https://stackoverflow.com/help/minimal-reproducible-example">https://stackoverflow.com/help/minimal-reproducible-example</a></li>
+<li>Eric S. Raymond, <em>How To Ask Questions The Smart Way</em>:
+<a href="http://www.catb.org/esr/faqs/smart-questions.html">http://www.catb.org/esr/faqs/smart-questions.html</a></li>
+<li>Discord, <em>Forum Channels FAQ</em>:
+<a href="https://support.discord.com/hc/en-us/articles/6208479917079-Forum-Channels-FAQ">https://support.discord.com/hc/en-us/articles/6208479917079-Forum-Channels-FAQ</a></li>
+<li>Omarchy skill guides: <code>capture.md</code> and <code>contributing.md</code> (bundled with the
+Omarchy skill).</li>
+</ul>
+<hr>
+<p><em>When in doubt: reproduce it, minimize it, gather <code>omarchy debug</code>, and post the
+whole story in one message. That is 90% of getting help.</em></p>
+
+</main>
+<footer>
+  Getting Help with Omarchy &mdash; a guide to Discord <code>#omarchy-help</code> and
+  GitHub issues. Commands and paths reflect Omarchy 4.x; verify with
+  <code>omarchy commands</code> on your system.
+</footer>
+</body>
+</html>
