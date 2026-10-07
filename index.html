@@ -1,611 +1,286 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>signaldirective ~/repos</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
-<style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    background: #1e1e2e;
-    background-image:
-        radial-gradient(ellipse at center, #1e1e2e 0%, #14141f 100%);
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: 'DM Mono', 'Monaco', 'Consolas', monospace;
-    padding: 16px;
-}
-
-.terminal {
-    background: #11111b;
-    border: 2px solid #313244;
-    border-radius: 8px;
-    box-shadow:
-        0 0 30px rgba(186, 229, 255, 0.04),
-        inset 0 0 60px rgba(0, 0, 0, 0.4);
-    width: 100%;
-    max-width: 760px;
-    overflow: hidden;
-    position: relative;
-}
-
-.terminal::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: repeating-linear-gradient(
-        0deg,
-        transparent,
-        transparent 2px,
-        rgba(186, 229, 255, 0.008) 2px,
-        rgba(186, 229, 255, 0.008) 4px
-    );
-    pointer-events: none;
-    z-index: 1;
-}
-
-.titlebar {
-    background: #181825;
-    border-bottom: 1px solid #313244;
-    padding: 8px 16px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 13px;
-    color: #6c7086;
-    user-select: none;
-}
-
-<!-- .titlebar-dots {
-    display: flex;
-    gap: 6px;
-}
-
-.titlebar-dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-} -->
-
-<!--.titlebar-dot.r { background: #ffa398; }
-.titlebar-dot.y { background: #ebcb8b; }
-.titlebar-dot.g { background: #d0f7a6; } -->
-
-.titlebar-text {
-    margin-left: 12px;
-    font-weight: 400;
-    color: #585b70;
-}
-
-.titlebar-text .at {
-    color: #6c7086;
-}
-
-.titlebar-text .host {
-    color: #bae5ff;
-}
-
-.titlebar-text .path {
-    color: #a6adc8;
-}
-
-.body {
-    padding: 24px 28px 20px;
-    position: relative;
-    z-index: 0;
-    min-height: 400px;
-    display: flex;
-    flex-direction: column;
-}
-
-.banner {
-    color: #45475a;
-    font-size: 11px;
-    line-height: 1.15;
-    letter-spacing: 0.02em;
-    margin-bottom: 20px;
-    white-space: pre;
-}
-
-.banner .accent {
-    color: #bae5ff;
-}
-
-.prompt-line {
-    color: #6c7086;
-    font-size: 14px;
-    margin-bottom: 16px;
-}
-
-.prompt-line .prompt-user {
-    color: #d0f7a6;
-}
-
-.prompt-line .prompt-path {
-    color: #bae5ff;
-}
-
-.prompt-line .prompt-symbol {
-    color: #6c7086;
-}
-
-.repo-list {
-    list-style: none;
-    margin-bottom: 20px;
-    flex: 1;
-}
-
-.repo-item {
-    display: flex;
-    align-items: baseline;
-    gap: 12px;
-    padding: 6px 8px;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background 0.15s ease, color 0.15s ease;
-    font-size: 14px;
-    line-height: 1.5;
-    color: #a6adc8;
-    text-decoration: none;
-}
-
-.repo-item:hover,
-.repo-item.highlighted {
-    background: rgba(186, 229, 255, 0.06);
-    color: #cdd6f4;
-}
-
-.repo-item .index {
-    color: #585b70;
-    min-width: 40px;
-    font-weight: 300;
-}
-
-.section-header {
-    color: #6c7086;
-    font-size: 12px;
-    letter-spacing: 0.05em;
-    text-transform: lowercase;
-    padding: 14px 8px 4px;
-    margin-top: 4px;
-    border-bottom: 1px dashed #313244;
-}
-
-.section-header:first-child {
-    padding-top: 4px;
-}
-
-.section-header .key {
-    color: #45475a;
-    float: right;
-    text-transform: none;
-    letter-spacing: 0;
-}
-
-.repo-item .name {
-    color: #bae5ff;
-    min-width: 180px;
-    font-weight: 400;
-}
-
-.repo-item:hover .name {
-    color: #c4eaff;
-}
-
-.repo-item .desc {
-    color: #6c7086;
-    font-weight: 300;
-    font-size: 13px;
-}
-
-.repo-item:hover .desc {
-    color: #a6adc8;
-}
-
-.repo-list {
-    list-style: none;
-    margin-bottom: 20px;
-    flex: 1;
-}
-
-.ko-fi {
-    display: flex;
-    align-items: baseline;
-    gap: 12px;
-    padding: 6px 8px;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background 0.15s ease, color 0.15s ease;
-    font-size: 10px;
-    line-height: 1.5;
-    color: #a6adc8;
-    text-decoration: none;
-}
-
-.ko-fi:hover,
-.ko-fi.highlighted {
-    background: rgba(186, 229, 255, 0.06);
-    color: #cdd6f4;
-}
-
-.ko-fi .index {
-    color: #585b70;
-    min-width: 28px;
-    font-weight: 300;
-}
-.ko-fi .name {
-    color: #bae5ff;
-    min-width: 180px;
-    font-weight: 400;
-}
-
-.ko-fi:hover .name {
-    color: #c4eaff;
-}
-
-.ko-fi .desc {
-    color: #6c7086;
-    font-weight: 300;
-    font-size: 10px;
-}
-
-.ko-fi:hover .desc {
-    color: #a6adc8;
-}
-.prompt {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 14px;
-    margin-top: auto;
-    padding-top: 12px;
-    border-top: 1px solid #181825;
-}
-
-.prompt .prompt-user {
-    color: #d0f7a6;
-}
-
-.prompt .prompt-path {
-    color: #bae5ff;
-}
-
-.prompt .prompt-symbol {
-    color: #6c7086;
-}
-
-.cursor {
-    display: inline-block;
-    width: 8px;
-    height: 16px;
-    background: #d0f7a6;
-    animation: blink 1s step-end infinite;
-    vertical-align: text-bottom;
-    margin-left: 2px;
-}
-
-@keyframes blink {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0; }
-}
-
-.footer {
-    border-top: 1px solid #181825;
-    padding: 8px 16px;
-    font-size: 12px;
-    color: #45475a;
-    display: flex;
-    gap: 16px;
-    background: #14141f;
-}
-
-.footer kbd {
-    color: #585b70;
-    background: #1e1e2e;
-    padding: 1px 6px;
-    border-radius: 3px;
-    border: 1px solid #313244;
-    font-family: inherit;
-    font-size: 11px;
-}
-
-.footer .action {
-    color: #6c7086;
-}
-
-.footer .action .highlight {
-    color: #bae5ff;
-}
-
-.quit-overlay {
-    display: none;
-    position: absolute;
-    inset: 0;
-    z-index: 10;
-    background: #11111b;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: 14px;
-    color: #ffa398;
-    animation: fadeIn 0.3s ease;
-}
-
-.quit-overlay.show {
-    display: flex;
-}
-
-.quit-overlay .ascii {
-    color: #45475a;
-    font-size: 12px;
-    line-height: 1.3;
-    margin-bottom: 16px;
-    white-space: pre;
-}
-
-.quit-overlay .msg {
-    color: #6c7086;
-    font-size: 13px;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
-@media (max-width: 600px) {
-    .body { padding: 16px 16px 12px; }
-    .repo-item { flex-wrap: wrap; gap: 4px; }
-    .repo-item .name { min-width: 140px; }
-    .repo-item .desc { width: 100%; padding-left: 52px; font-size: 12px; }
-    .banner { font-size: 9px; }
-    .footer { flex-wrap: wrap; gap: 8px; }
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Signal Directive — Omarchy themes, plugins, tools, and documentation by a theme designer and plugin developer.">
+    <title>signal / directive — themes, tools &amp; plugins</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
 
-<div class="terminal" id="terminal">
-    <div class="titlebar">
-       <div class="titlebar-dots">
-      <!--      <span class="titlebar-dot r"></span> 
-            <span class="titlebar-dot y"></span>
-            <span class="titlebar-dot g"></span> -->
-        </div>
-        <div class="titlebar-text">
-            <span class="at">signaldirective</span><span class="path">@github</span><span class="at">:</span><span class="path">~</span>
-        </div>
+    <div class="site-shell">
+        <header class="site-header" id="top">
+            <a class="brand" href="#top" aria-label="Signal Directive home">
+                <span class="brand-mark"><img src="assets/signaldirective-logo.png" alt=""></span>
+                <span class="brand-name">signal <i>/</i> directive</span>
+            </a>
+
+            <nav class="site-nav" aria-label="Primary navigation">
+                <a href="#themes">Themes <span>16</span></a>
+                <a href="#projects">Projects <span>05</span></a>
+                <a href="#plugins">Plugins <span>02</span></a>
+                <a href="#documentation">Docs</a>
+            </nav>
+
+            <a class="header-link" href="https://github.com/signaldirective" target="_blank" rel="noopener">
+                GitHub <span aria-hidden="true">↗</span>
+            </a>
+        </header>
+
+        <main id="main-content">
+            <section class="hero" aria-labelledby="hero-title">
+                <div class="hero-copy">
+                    <p class="eyebrow"><span class="eyebrow-rule" aria-hidden="true"></span> signal directive / open source studio</p>
+                    <h1 id="hero-title">Interfaces for people who refuse the default.</h1>
+                    <p class="hero-lede">Omarchy themes, useful tools, and just enough personality to make a Linux desktop feel like yours.</p>
+
+                    <div class="hero-actions">
+                        <a class="button button-solid" href="#themes">Browse the collection <span aria-hidden="true">↓</span></a>
+                        <a class="text-link" href="https://github.com/signaldirective" target="_blank" rel="noopener">View GitHub <span aria-hidden="true">↗</span></a>
+                    </div>
+
+                    <div class="hero-meta" aria-label="Collection summary">
+                        <div class="meta-item">
+                            <strong>16</strong>
+                            <span>Omarchy themes</span>
+                        </div>
+                        <div class="meta-item">
+                            <strong>07</strong>
+                            <span>tools &amp; plugins</span>
+                        </div>
+                        <div class="meta-item">
+                            <strong>01</strong>
+                            <span>field guide</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="hero-visual" aria-label="Signal Directive identity mark">
+                    <div class="visual-topline">
+                        <span>signal.directive</span>
+                        <span>01 / identity</span>
+                    </div>
+                    <div class="logo-stage">
+                        <img class="hero-logo" src="assets/signaldirective-logo.png" alt="Signal Directive logo">
+                        <span class="stage-label stage-label-top">theme / plugin / play</span>
+                        <span class="stage-label stage-label-bottom">est. in the margins</span>
+                        <span class="stage-coordinate">40° 43′ N&nbsp;&nbsp; 74° 00′ W</span>
+                    </div>
+                    <div class="visual-footer">
+                        <span>signal // directive</span>
+                        <span class="status"><i aria-hidden="true"></i> building in public</span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="about-strip" id="about" aria-labelledby="about-title">
+                <div class="section-kicker">00 / about</div>
+                <div class="about-copy">
+                    <h2 id="about-title">Technical work, with a pulse.</h2>
+                    <p>I’m an Omarchy evangelist, theme designer, and plugin developer. I make tools for a more personal Linux desktop — and I make music and have DJ’d some of the hottest clubs on the East Coast.</p>
+                </div>
+                <a class="support-link" href="https://ko-fi.com/signaldirective" target="_blank" rel="noopener">
+                    <span>Support the experiments</span>
+                    <span class="support-arrow" aria-hidden="true">↗</span>
+                </a>
+            </section>
+
+            <section class="collection-section" id="themes" aria-labelledby="themes-title">
+                <div class="section-heading">
+                    <p class="section-kicker">01 / themes</p>
+                    <div>
+                        <h2 id="themes-title">Change the atmosphere.</h2>
+                        <p class="section-intro">A growing set of Omarchy themes, from soft and easy on the eyes to fully radioactive.</p>
+                    </div>
+                    <span class="section-count">16 entries</span>
+                </div>
+
+                <div class="theme-grid">
+                    <a class="theme-item" href="https://github.com/signaldirective/grand-theft-omarchy" target="_blank" rel="noopener">
+                        <span class="theme-swatch swatch-gta" aria-hidden="true"></span>
+                        <span class="theme-copy"><strong>grand-theft-omarchy</strong><small>GTA VI inspired Omarchy theme.</small></span>
+                        <span class="item-arrow" aria-hidden="true">↗</span>
+                    </a>
+                    <a class="theme-item" href="https://github.com/signaldirective/tidewater-dark" target="_blank" rel="noopener">
+                        <span class="theme-swatch swatch-tide-dark" aria-hidden="true"></span>
+                        <span class="theme-copy"><strong>tidewater-dark</strong><small>A dark theme that’s easy on the eyes.</small></span>
+                        <span class="item-arrow" aria-hidden="true">↗</span>
+                    </a>
+                    <a class="theme-item" href="https://github.com/signaldirective/tidewater-light" target="_blank" rel="noopener">
+                        <span class="theme-swatch swatch-tide-light" aria-hidden="true"></span>
+                        <span class="theme-copy"><strong>tidewater-light</strong><small>A light theme that’s easy on the eyes.</small></span>
+                        <span class="item-arrow" aria-hidden="true">↗</span>
+                    </a>
+                    <a class="theme-item" href="https://github.com/signaldirective/bloqi" target="_blank" rel="noopener">
+                        <span class="theme-swatch swatch-bloqi" aria-hidden="true"></span>
+                        <span class="theme-copy"><strong>bloqi</strong><small>Block-building game inspired.</small></span>
+                        <span class="item-arrow" aria-hidden="true">↗</span>
+                    </a>
+                    <a class="theme-item" href="https://github.com/signaldirective/quattro-glass" target="_blank" rel="noopener">
+                        <span class="theme-swatch swatch-quattro" aria-hidden="true"></span>
+                        <span class="theme-copy"><strong>quattro-glass</strong><small>Liquid glass, updated for Quattro.</small></span>
+                        <span class="item-arrow" aria-hidden="true">↗</span>
+                    </a>
+                    <a class="theme-item" href="https://github.com/signaldirective/norman-theme" target="_blank" rel="noopener">
+                        <span class="theme-swatch swatch-norman" aria-hidden="true"></span>
+                        <span class="theme-copy"><strong>norman-theme</strong><small>It’s... Norman.</small></span>
+                        <span class="item-arrow" aria-hidden="true">↗</span>
+                    </a>
+                    <a class="theme-item" href="https://github.com/signaldirective/andromeda" target="_blank" rel="noopener">
+                        <span class="theme-swatch swatch-andromeda" aria-hidden="true"></span>
+                        <span class="theme-copy"><strong>andromeda</strong><small>Inspired by Andromeda Qt / GTK themes.</small></span>
+                        <span class="item-arrow" aria-hidden="true">↗</span>
+                    </a>
+                    <a class="theme-item" href="https://github.com/signaldirective/catppuccin-sherbet" target="_blank" rel="noopener">
+                        <span class="theme-swatch swatch-sherbet" aria-hidden="true"></span>
+                        <span class="theme-copy"><strong>catppuccin-sherbet</strong><small>Sherbet-flavored Catppuccin.</small></span>
+                        <span class="item-arrow" aria-hidden="true">↗</span>
+                    </a>
+                    <a class="theme-item" href="https://github.com/signaldirective/cyberphunk" target="_blank" rel="noopener">
+                        <span class="theme-swatch swatch-cyber" aria-hidden="true"></span>
+                        <span class="theme-copy"><strong>cyberphunk</strong><small>For a desktop with a little bite.</small></span>
+                        <span class="item-arrow" aria-hidden="true">↗</span>
+                    </a>
+                    <a class="theme-item" href="https://github.com/signaldirective/delete-theme" target="_blank" rel="noopener">
+                        <span class="theme-swatch swatch-delete" aria-hidden="true"></span>
+                        <span class="theme-copy"><strong>delete-theme</strong><small>Upgrade or delete you.</small></span>
+                        <span class="item-arrow" aria-hidden="true">↗</span>
+                    </a>
+                    <a class="theme-item" href="https://github.com/signaldirective/gruvy-glass" target="_blank" rel="noopener">
+                        <span class="theme-swatch swatch-gruvy" aria-hidden="true"></span>
+                        <span class="theme-copy"><strong>gruvy-glass</strong><small>Semi-translucent Gruvbox inspired.</small></span>
+                        <span class="item-arrow" aria-hidden="true">↗</span>
+                    </a>
+                    <a class="theme-item" href="https://github.com/signaldirective/rebel-rebel" target="_blank" rel="noopener">
+                        <span class="theme-swatch swatch-rebel" aria-hidden="true"></span>
+                        <span class="theme-copy"><strong>rebel-rebel</strong><small>A theme that sparks rebellion.</small></span>
+                        <span class="item-arrow" aria-hidden="true">↗</span>
+                    </a>
+                    <a class="theme-item" href="https://github.com/signaldirective/robco-theme" target="_blank" rel="noopener">
+                        <span class="theme-swatch swatch-robco" aria-hidden="true"></span>
+                        <span class="theme-copy"><strong>robco-theme</strong><small>Fallout 3 RobCo terminal inspired.</small></span>
+                        <span class="item-arrow" aria-hidden="true">↗</span>
+                    </a>
+                    <a class="theme-item" href="https://github.com/signaldirective/robco-mojave" target="_blank" rel="noopener">
+                        <span class="theme-swatch swatch-mojave" aria-hidden="true"></span>
+                        <span class="theme-copy"><strong>robco-mojave</strong><small>Fallout: New Vegas terminal inspired.</small></span>
+                        <span class="item-arrow" aria-hidden="true">↗</span>
+                    </a>
+                    <a class="theme-item" href="https://github.com/signaldirective/storm-cloud" target="_blank" rel="noopener">
+                        <span class="theme-swatch swatch-storm" aria-hidden="true"></span>
+                        <span class="theme-copy"><strong>storm-cloud</strong><small>A stormy, low-light vibe.</small></span>
+                        <span class="item-arrow" aria-hidden="true">↗</span>
+                    </a>
+                    <a class="theme-item" href="https://github.com/signaldirective/neo-eldritch" target="_blank" rel="noopener">
+                        <span class="theme-swatch swatch-eldritch" aria-hidden="true"></span>
+                        <span class="theme-copy"><strong>neo-eldritch</strong><small>A theme for cosmic horrors.</small></span>
+                        <span class="item-arrow" aria-hidden="true">↗</span>
+                    </a>
+                </div>
+            </section>
+
+            <section class="collection-section" id="projects" aria-labelledby="projects-title">
+                <div class="section-heading">
+                    <p class="section-kicker">02 / projects</p>
+                    <div>
+                        <h2 id="projects-title">Small tools with sharp edges.</h2>
+                        <p class="section-intro">Practical experiments, playful utilities, and software that solves a very specific problem.</p>
+                    </div>
+                    <span class="section-count">05 entries</span>
+                </div>
+
+                <div class="project-list">
+                    <a class="project-row" href="https://github.com/signaldirective/aur_safety" target="_blank" rel="noopener">
+                        <span class="row-index">01</span>
+                        <span class="row-copy"><strong>aur_safety</strong><small>A <code>yay</code> wrapper that checks lists of suspected malicious or infected AUR packages.</small></span>
+                        <span class="row-tag">Python / security</span>
+                        <span class="item-arrow" aria-hidden="true">↗</span>
+                    </a>
+                    <a class="project-row" href="https://github.com/signaldirective/pridelet" target="_blank" rel="noopener">
+                        <span class="row-index">02</span>
+                        <span class="row-copy"><strong>pridelet</strong><small>Pride-powered ASCII text generator.</small></span>
+                        <span class="row-tag">C / generative</span>
+                        <span class="item-arrow" aria-hidden="true">↗</span>
+                    </a>
+                    <a class="project-row" href="https://github.com/signaldirective/twist" target="_blank" rel="noopener">
+                        <span class="row-index">03</span>
+                        <span class="row-copy"><strong>twist</strong><small>Theme-aware web interface styling toolkit and Omarchy start page.</small></span>
+                        <span class="row-tag">web / theming</span>
+                        <span class="item-arrow" aria-hidden="true">↗</span>
+                    </a>
+                    <a class="project-row" href="https://github.com/signaldirective/twist-quattro" target="_blank" rel="noopener">
+                        <span class="row-index">04</span>
+                        <span class="row-copy"><strong>twist-quattro</strong><small>Quattro implementation of TWIST.</small></span>
+                        <span class="row-tag">web / quattro</span>
+                        <span class="item-arrow" aria-hidden="true">↗</span>
+                    </a>
+                    <a class="project-row" href="https://github.com/signaldirective/fallout-hacking" target="_blank" rel="noopener">
+                        <span class="row-index">05</span>
+                        <span class="row-copy"><strong>fallout-hacking</strong><small>Fallout-inspired hacking game.</small></span>
+                        <span class="row-tag">Python / game</span>
+                        <span class="item-arrow" aria-hidden="true">↗</span>
+                    </a>
+                </div>
+            </section>
+
+            <section class="collection-section plugin-section" id="plugins" aria-labelledby="plugins-title">
+                <div class="section-heading">
+                    <p class="section-kicker">03 / plugins</p>
+                    <div>
+                        <h2 id="plugins-title">Make the system yours.</h2>
+                        <p class="section-intro">Add-ons for the parts of Omarchy you touch every day.</p>
+                    </div>
+                    <span class="section-count">02 entries</span>
+                </div>
+
+                <div class="plugin-grid">
+                    <a class="plugin-card" href="https://github.com/signaldirective/radial-menu" target="_blank" rel="noopener">
+                        <span class="plugin-number">PLUGIN / 01</span>
+                        <span class="plugin-title"><strong>radial-menu</strong><span class="item-arrow" aria-hidden="true">↗</span></span>
+                        <span class="plugin-description">An Omarchy radial / pie menu for getting to the things you need without hunting through menus.</span>
+                        <span class="plugin-meta">QML · Omarchy</span>
+                    </a>
+                    <a class="plugin-card" href="https://github.com/signaldirective/everytheme" target="_blank" rel="noopener">
+                        <span class="plugin-number">PLUGIN / 02</span>
+                        <span class="plugin-title"><strong>everytheme</strong><span class="item-arrow" aria-hidden="true">↗</span></span>
+                        <span class="plugin-description">Sync themes across multiple Omarchy devices — change the theme on one and change it on all the others.</span>
+                        <span class="plugin-meta">Python · MIT</span>
+                    </a>
+                </div>
+            </section>
+
+            <section class="docs-section" id="documentation" aria-labelledby="documentation-title">
+                <div class="section-heading">
+                    <p class="section-kicker">04 / documentation</p>
+                    <div>
+                        <h2 id="documentation-title">Useful before you ask.</h2>
+                        <p class="section-intro">A practical guide to getting better help from the Omarchy community.</p>
+                    </div>
+                    <span class="section-count">01 guide</span>
+                </div>
+
+                <a class="doc-link" href="https://signaldirective.github.io/omarchy-getting-help.html">
+                    <span class="doc-index">DOC / 01</span>
+                    <span class="doc-copy"><strong>getting help with omarchy</strong><small>How to ask for help in <code>#omarchy-help</code> and file good GitHub issues.</small></span>
+                    <span class="doc-action">Read the guide <span aria-hidden="true">↗</span></span>
+                </a>
+            </section>
+        </main>
+
+        <footer class="site-footer">
+            <span>signal <i>/</i> directive</span>
+            <span class="footer-note">themes, tools, and other useful noise</span>
+            <div class="footer-links">
+                <a href="https://ko-fi.com/signaldirective" target="_blank" rel="noopener">Ko-fi <span aria-hidden="true">↗</span></a>
+                <a href="https://github.com/signaldirective" target="_blank" rel="noopener">GitHub <span aria-hidden="true">↗</span></a>
+                <a href="#top">Back to top <span aria-hidden="true">↑</span></a>
+            </div>
+        </footer>
     </div>
-    <div class="body" id="body">
-        <div class="banner" aria-label="signaldirective ascii art">   
-        <span class="accent">     _             _          _ _             _   _
-        <span class="accent"> ___|_|___ ___ ___| |       _| |_|___ ___ ___| |_|_|_ _ ___
-        <span class="accent">|_ -| | . |   | .'| |      | . | |  _| -_|  _|  _| | | | -_|
-        <span class="accent">|___|_|_  |_|_|__,|_|      |___|_|_| |___|___|_| |_|\_/|___|
-        <span class="accent">      |___|</div>
-
-        <div class="prompt-line">
-            <span class="prompt-user">signaldirective</span><span class="prompt-symbol">@</span><span class="prompt-path">github</span><span class="prompt-symbol">:</span><span class="prompt-path">~/repos</span><span class="prompt-symbol"> $ </span>ls -la
-        </div>
-
-        <div class="repo-list" id="repoList" role="listbox" aria-label="Repository list">
-            <div class="section-header">~/projects <span class="key">1-7</span></div>
-            <a class="repo-item" href="https://github.com/signaldirective" target="_blank" rel="noopener" data-index="1" role="option">
-                <span class="index">[1]</span>
-                <span class="name">signaldirective</span>
-                <span class="desc">main github profile & all repos</span>
-            </a>
-            <a class="repo-item" href="https://github.com/signaldirective/aur_safety" target="_blank" rel="noopener" data-index="2" role="option">
-                <span class="index">[2]</span>
-                <span class="name">aur_safety</span>
-                <span class="desc">drop-in AUR helper wrapper — annotates if a package is suspected malicious</span>
-            </a>
-            <a class="repo-item" href="https://github.com/signaldirective/twist" target="_blank" rel="noopener" data-index="3" role="option">
-                <span class="index">[3]</span>
-                <span class="name">twist</span>
-                <span class="desc">omarchy-aware firefox userChrome generator & start page</span>
-            </a>
-             <a class="repo-item" href="https://github.com/signaldirective/twist-quattro" target="_blank" rel="noopener" data-index="4" role="option">
-                <span class="index">[4]</span>
-                <span class="name">twist quattro</span>
-                <span class="desc">omarchy-aware firefox userChrome generator & start page QUATTRO EDITION!</span>
-            </a>
-            <a class="repo-item" href="https://github.com/signaldirective/pridelet" target="_blank" rel="noopener" data-index="5" role="option">
-                <span class="index">[5]</span>
-                <span class="name">pridelet</span>
-                <span class="desc">pride powered ASCII text generator</span>
-            </a>
-            <a class="repo-item" href="https://github.com/signaldirective/fallout-hacking" target="_blank" rel="noopener" data-index="6" role="option">
-                <span class="index">[6]</span>
-                <span class="name">fallout-hacking</span>
-                <span class="desc">fallout inspired hacking game</span>
-            </a>
-            <a class="repo-item" href="https://github.com/signaldirective/fetchdots" target="_blank" rel="noopener" data-index="7" role="option">
-                <span class="index">[7]</span>
-                <span class="name">fetchdots</span>
-                <span class="desc">my fastfetch config and dot art example file</span>
-            </a>
-            <a class="repo-item" href="https://github.com/signaldirective/color-scripts" target="_blank" rel="noopener" data-index="8" role="option">
-                <span class="index">[8]</span>
-                <span class="name">color-scripts</span>
-                <span class="desc">shell scripts for displaying colors — some redundancies</span>
-            </a>
-
-            <div class="section-header">~/themes <span class="key">ctrl+1-9</span></div>
-            <a class="repo-item" href="https://github.com/signaldirective/andromeda" target="_blank" rel="noopener" data-ctrl="1" role="option">
-                <span class="index">[C1]</span>
-                <span class="name">andromeda</span>
-                <span class="desc">omarchy theme inspired by Andromeda Qt/GTK themes</span>
-            </a>
-            <a class="repo-item" href="https://github.com/signaldirective/catppuccin-sherbet" target="_blank" rel="noopener" data-ctrl="2" role="option">
-                <span class="index">[C2]</span>
-                <span class="name">catppuccin-sherbet</span>
-                <span class="desc">sherbet flavored catppuccin omarchy theme</span>
-            </a>
-            <a class="repo-item" href="https://github.com/signaldirective/cyberphunk" target="_blank" rel="noopener" data-ctrl="3" role="option">
-                <span class="index">[C3]</span>
-                <span class="name">cyberphunk</span>
-                <span class="desc">omarchy cyberphunk theme</span>
-            </a>
-            <a class="repo-item" href="https://github.com/signaldirective/delete-theme" target="_blank" rel="noopener" data-ctrl="4" role="option">
-                <span class="index">[C4]</span>
-                <span class="name">delete-theme</span>
-                <span class="desc">omarchy theme that will UPGRADE or DELETE you</span>
-            </a>
-            <a class="repo-item" href="https://github.com/signaldirective/gruvy-glass" target="_blank" rel="noopener" data-ctrl="5" role="option">
-                <span class="index">[C5]</span>
-                <span class="name">gruvy-glass</span>
-                <span class="desc">semi-translucent gruvbox inspired omarchy theme</span>
-            </a>
-            <a class="repo-item" href="https://github.com/signaldirective/rebel-rebel" target="_blank" rel="noopener" data-ctrl="6" role="option">
-                <span class="index">[C6]</span>
-                <span class="name">rebel-rebel</span>
-                <span class="desc">omarchy theme that sparks rebellion</span>
-            </a>
-            <a class="repo-item" href="https://github.com/signaldirective/robco-theme" target="_blank" rel="noopener" data-ctrl="7" role="option">
-                <span class="index">[C7]</span>
-                <span class="name">robco-theme</span>
-                <span class="desc">Fallout 3 RobCo terminal inspired omarchy theme</span>
-            </a>
-            <a class="repo-item" href="https://github.com/signaldirective/robco-mojave" target="_blank" rel="noopener" data-ctrl="8" role="option">
-                <span class="index">[C8]</span>
-                <span class="name">robco-mojave</span>
-                <span class="desc">Fallout New Vegas terminal inspired omarchy theme</span>
-            </a>
-            <a class="repo-item" href="https://github.com/signaldirective/storm-cloud" target="_blank" rel="noopener" data-ctrl="9" role="option">
-                <span class="index">[C9]</span>
-                <span class="name">storm-cloud</span>
-                <span class="desc">omarchy theme with a stormy vibe</span>
-            </a>
-              <a class="repo-item" href="https://github.com/signaldirective/neo-eldritch" target="_blank" rel="noopener" data-ctrl="0" role="option">
-                <span class="index">[C9]</span>
-                <span class="name">neo-eldritch</span>
-                <span class="desc">omarchy theme for cosmic horrors!</span>
-            </a>
-
-            <div class="section-header">~/docs <span class="key">guide</span></div>
-            <a class="repo-item" href="omarchy-getting-help.html" target="_blank" rel="noopener" role="option">
-                <span class="index">[D1]</span>
-                <span class="name">getting help with omarchy</span>
-                <span class="desc">how to ask for help in #omarchy-help &amp; file good github issues</span>
-            </a>
-        </div>
-
-        <div class="prompt">
-            <span class="prompt-user">signaldirective</span><span class="prompt-symbol">@</span><span class="prompt-path">github</span><span class="prompt-symbol">:</span><span class="prompt-path">~/repos</span><span class="prompt-symbol"> $ </span>
-            <span class="cursor" aria-hidden="true"></span>
-        </div>
-    </div>
-
-    <div class="footer">
-        <span class="action"><kbd>1-8</kbd> <span class="highlight">projects</span></span>
-        <span class="action"><kbd>ctrl+1-0</kbd> <span class="highlight">themes</span></span>
-        <span class="action"><kbd>&uarr;</kbd><kbd>&darr;</kbd> <span class="highlight">navigate</span></span>
-        <span class="action"><kbd>q</kbd> <span class="highlight">quit</span></span>
-        <a class="ko-fi" style="margin-left:auto;color:#45475a;" href="https://ko-fi.com/signaldirective" target="_blank"  rel="noopener" role="option">
-         
-       <span class="name"> signaldirective · ko-fi</span></a>
-    </div>
-
-    <div class="quit-overlay" id="quitOverlay">
-        <div class="ascii">  ╔══════════════════════════════════════╗
-  ║        connection terminated.        ║
-  ╚══════════════════════════════════════╝</div>
-        <div class="msg">[process completed] close this tab or press any key to restart</div>
-    </div>
-</div>
-
-<script>
-(function () {
-    const items = document.querySelectorAll('.repo-item');
-    let current = 0;
-
-    function highlight(idx) {
-        items.forEach((el, i) => {
-            el.classList.toggle('highlighted', i === idx);
-        });
-    }
-
-    function openCurrent() {
-        if (items[current]) {
-            window.open(items[current].href, '_blank');
-        }
-    }
-
-    function openProject(n) {
-        const el = document.querySelector(`.repo-item[data-index="${n}"]`);
-        if (el) window.open(el.href, '_blank');
-    }
-
-    function openTheme(n) {
-        const el = document.querySelector(`.repo-item[data-ctrl="${n}"]`);
-        if (el) window.open(el.href, '_blank');
-    }
-
-    document.addEventListener('keydown', (e) => {
-        const overlay = document.getElementById('quitOverlay');
-        if (overlay.classList.contains('show')) {
-            overlay.classList.remove('show');
-            return;
-        }
-
-        if (e.ctrlKey) {
-            const n = parseInt(e.key, 11);
-            if (n >= 0 && n <= 9) {
-                e.preventDefault();
-                openTheme(n);
-            }
-            return;
-        }
-
-        switch (e.key) {
-            case 'ArrowDown':
-                e.preventDefault();
-                current = Math.min(current + 1, items.length - 1);
-                highlight(current);
-                break;
-            case 'ArrowUp':
-                e.preventDefault();
-                current = Math.max(current - 1, 0);
-                highlight(current);
-                break;
-            case 'Enter':
-                e.preventDefault();
-                openCurrent();
-                break;
-            case 'q':
-            case 'Q':
-                e.preventDefault();
-                overlay.classList.add('show');
-                break;
-            default:
-                const n = parseInt(e.key, 10);
-                if (n >= 1 && n <= 7) openProject(n);
-        }
-    });
-
-    items.forEach((el, i) => {
-        el.addEventListener('mouseenter', () => {
-            current = i;
-            highlight(current);
-        });
-        el.addEventListener('click', (e) => {
-            e.preventDefault();
-            current = i;
-            window.open(el.href, '_blank');
-        });
-    });
-
-    highlight(0);
-})();
-</script>
 </body>
 </html>
