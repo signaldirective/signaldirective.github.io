@@ -1,4 +1,35 @@
 :root {
+    color-scheme: dark;
+    --paper: #0f1513;
+    --paper-deep: #17201c;
+    --ink: #edf3eb;
+    --ink-soft: #b4c1b9;
+    --muted: #829088;
+    --line: #2a3731;
+    --line-strong: #46554d;
+    --acid: #d9ed58;
+    --acid-dark: #b7cf3c;
+    --blue: #82a9ff;
+    --white: #fbfcf8;
+    --stage: #202b25;
+    --stage-grid: rgba(217, 237, 88, .13);
+    --stage-frame: rgba(217, 237, 88, .42);
+    --plugin-hover: rgba(217, 237, 88, .12);
+    --button-bg: var(--acid);
+    --button-fg: var(--paper);
+    --doc-bg: var(--acid);
+    --doc-fg: #17221f;
+    --doc-muted: #4d5b2b;
+    --doc-accent: #17221f;
+    --doc-code-bg: rgba(23, 34, 31, .12);
+    --skip-fg: #17221f;
+    --mono: "IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
+    --sans: "Manrope", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --max-width: 1280px;
+}
+
+:root.light-mode {
+    color-scheme: light;
     --paper: #f3f5ef;
     --paper-deep: #e7ece5;
     --ink: #17221f;
@@ -6,13 +37,21 @@
     --muted: #718079;
     --line: #cbd3ca;
     --line-strong: #a7b2aa;
-    --acid: #d9ed58;
     --acid-dark: #a5b835;
     --blue: #2c68ee;
     --white: #fbfcf8;
-    --mono: "IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
-    --sans: "Manrope", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    --max-width: 1280px;
+    --stage: var(--acid);
+    --stage-grid: rgba(23, 34, 31, .11);
+    --stage-frame: rgba(23, 34, 31, .38);
+    --plugin-hover: rgba(217, 237, 88, .32);
+    --button-bg: var(--ink);
+    --button-fg: var(--paper);
+    --doc-bg: var(--ink);
+    --doc-fg: var(--paper);
+    --doc-muted: #b8c4bd;
+    --doc-accent: var(--acid);
+    --doc-code-bg: rgba(243, 245, 239, .12);
+    --skip-fg: #17221f;
 }
 
 * {
@@ -51,8 +90,8 @@ a:focus-visible {
     left: 12px;
     z-index: 20;
     padding: 10px 14px;
-    background: var(--ink);
-    color: var(--paper);
+    background: var(--acid);
+    color: var(--skip-fg);
     font: 500 12px/1 var(--mono);
     text-decoration: none;
     transform: translateY(-150%);
@@ -77,6 +116,7 @@ a:focus-visible {
     align-items: center;
     min-height: 78px;
     border-bottom: 1px solid var(--line);
+    background: var(--paper);
     background: color-mix(in srgb, var(--paper) 94%, transparent);
     backdrop-filter: blur(12px);
 }
@@ -146,8 +186,14 @@ a:focus-visible {
     font-size: 9px;
 }
 
-.header-link {
+.header-tools {
+    display: flex;
+    align-items: center;
     justify-self: end;
+    gap: 22px;
+}
+
+.header-link {
     color: var(--ink-soft);
     font: 500 11px/1 var(--mono);
 }
@@ -158,6 +204,50 @@ a:focus-visible {
 .support-arrow,
 .footer-links span {
     color: var(--blue);
+}
+
+.theme-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 5px 0;
+    border: 0;
+    background: transparent;
+    color: var(--ink-soft);
+    cursor: pointer;
+    font: 500 11px/1 var(--mono);
+}
+
+.theme-toggle:hover {
+    color: var(--blue);
+}
+
+.theme-toggle:focus-visible {
+    outline: 2px solid var(--blue);
+    outline-offset: 4px;
+}
+
+.theme-toggle-icon {
+    width: 14px;
+    height: 14px;
+    fill: none;
+    color: var(--blue);
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 1.8;
+}
+
+.theme-toggle-icon .icon-sun {
+    display: none;
+}
+
+.light-mode .theme-toggle-icon .icon-moon {
+    display: none;
+}
+
+.light-mode .theme-toggle-icon .icon-sun {
+    display: block;
 }
 
 .hero {
@@ -264,8 +354,8 @@ h1 {
 }
 
 .button-solid {
-    background: var(--ink);
-    color: var(--paper);
+    background: var(--button-bg);
+    color: var(--button-fg);
 }
 
 .button-solid:hover {
@@ -336,14 +426,14 @@ h1 {
     overflow: hidden;
     place-items: center;
     border: 1px solid var(--ink);
-    background-color: var(--acid);
+    background-color: var(--stage);
     isolation: isolate;
 }
 
 .logo-stage::before {
     position: absolute;
     inset: 0;
-    background-image: linear-gradient(rgba(23, 34, 31, .11) 1px, transparent 1px), linear-gradient(90deg, rgba(23, 34, 31, .11) 1px, transparent 1px);
+    background-image: linear-gradient(var(--stage-grid) 1px, transparent 1px), linear-gradient(90deg, var(--stage-grid) 1px, transparent 1px);
     background-size: 36px 36px;
     content: "";
     opacity: .55;
@@ -352,7 +442,7 @@ h1 {
 .logo-stage::after {
     position: absolute;
     inset: 18px;
-    border: 1px solid rgba(23, 34, 31, .38);
+    border: 1px solid var(--stage-frame);
     content: "";
     pointer-events: none;
 }
@@ -362,6 +452,11 @@ h1 {
     z-index: 1;
     width: min(79%, 450px);
     height: auto;
+    filter: invert(1) contrast(1.12);
+    mix-blend-mode: screen;
+}
+
+.light-mode .hero-logo {
     filter: contrast(1.12);
     mix-blend-mode: multiply;
 }
@@ -666,7 +761,7 @@ code {
 .plugin-card:hover {
     padding-right: calc(5% - 8px);
     padding-left: 8px;
-    background: rgba(217, 237, 88, .32);
+    background: var(--plugin-hover);
 }
 
 .plugin-card + .plugin-card:hover {
@@ -713,8 +808,8 @@ code {
     align-items: center;
     margin-top: 69px;
     padding: 27px 30px;
-    background: var(--ink);
-    color: var(--paper);
+    background: var(--doc-bg);
+    color: var(--doc-fg);
     text-decoration: none;
     transition: background 160ms ease, transform 160ms ease;
 }
@@ -726,22 +821,22 @@ code {
 
 .doc-index,
 .doc-action {
-    color: var(--acid);
+    color: var(--doc-accent);
     font-size: 10px;
     text-transform: uppercase;
 }
 
 .doc-copy strong {
-    color: var(--paper);
+    color: var(--doc-fg);
 }
 
 .doc-copy small {
-    color: #b8c4bd;
+    color: var(--doc-muted);
 }
 
 .doc-copy code {
-    background: rgba(243, 245, 239, .12);
-    color: var(--paper);
+    background: var(--doc-code-bg);
+    color: var(--doc-fg);
 }
 
 .doc-action {
@@ -752,7 +847,7 @@ code {
 }
 
 .doc-action span {
-    color: var(--acid);
+    color: var(--doc-accent);
     font-size: 15px;
 }
 
@@ -796,7 +891,7 @@ code {
         border-top: 1px solid var(--line);
     }
 
-    .header-link {
+    .header-tools {
         grid-column: 2;
         grid-row: 1;
     }
@@ -1013,6 +1108,14 @@ code {
 
     .header-link {
         font-size: 10px;
+    }
+
+    .header-tools {
+        gap: 12px;
+    }
+
+    .theme-toggle-label {
+        display: none;
     }
 
     .hero-copy {

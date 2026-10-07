@@ -5,6 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Signal Directive — Omarchy themes, plugins, tools, and documentation by a theme designer and plugin developer.">
     <title>signal / directive — themes, tools &amp; plugins</title>
+    <script>
+        try {
+            if (localStorage.getItem("signal-directive-theme") === "light") {
+                document.documentElement.classList.add("light-mode");
+            }
+        } catch (error) {
+            // Private browsing or blocked storage: stay with the dark default.
+        }
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -27,9 +36,21 @@
                 <a href="#documentation">Docs</a>
             </nav>
 
-            <a class="header-link" href="https://github.com/signaldirective" target="_blank" rel="noopener">
-                GitHub <span aria-hidden="true">↗</span>
-            </a>
+            <div class="header-tools">
+                <a class="header-link" href="https://github.com/signaldirective" target="_blank" rel="noopener">
+                    GitHub <span aria-hidden="true">↗</span>
+                </a>
+                <button class="theme-toggle" id="theme-toggle" type="button" aria-pressed="false" aria-label="Switch to light mode">
+                    <svg class="theme-toggle-icon" viewBox="0 0 24 24" aria-hidden="true">
+                        <path class="icon-moon" d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"></path>
+                        <g class="icon-sun">
+                            <circle cx="12" cy="12" r="4"></circle>
+                            <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"></path>
+                        </g>
+                    </svg>
+                    <span class="theme-toggle-label">Light mode</span>
+                </button>
+            </div>
         </header>
 
         <main id="main-content">
@@ -282,5 +303,33 @@
             </div>
         </footer>
     </div>
+
+    <script>
+        (function () {
+            const root = document.documentElement;
+            const toggle = document.getElementById("theme-toggle");
+            const label = toggle.querySelector(".theme-toggle-label");
+
+            function setTheme(theme) {
+                const isLight = theme === "light";
+                root.classList.toggle("light-mode", isLight);
+                toggle.setAttribute("aria-pressed", String(isLight));
+                toggle.setAttribute("aria-label", isLight ? "Switch to dark mode" : "Switch to light mode");
+                label.textContent = isLight ? "Dark mode" : "Light mode";
+            }
+
+            setTheme(root.classList.contains("light-mode") ? "light" : "dark");
+
+            toggle.addEventListener("click", function () {
+                const nextTheme = root.classList.contains("light-mode") ? "dark" : "light";
+                setTheme(nextTheme);
+                try {
+                    localStorage.setItem("signal-directive-theme", nextTheme);
+                } catch (error) {
+                    // The toggle still works for this visit when storage is unavailable.
+                }
+            });
+        }());
+    </script>
 </body>
 </html>
