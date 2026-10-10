@@ -150,8 +150,9 @@ footer {
     <a href="#3-the-implementation">3. The implementation</a>
     <a href="#4-verified-live">4. Verified live</a>
     <a href="#5-what-is-still-wrong-and-the-pr-that-fixes-it">5. What is still wrong, and the PR that fixes it</a>
-    <a href="#6-known-risks-and-sharp-edges">6. Known risks and sharp edges</a>
-    <a href="#7-reproducing-the-verification">7. Reproducing the verification</a>
+    <a href="#6-the-trap-a-user-stylesheet-silently-overrides-the-theme">6. The trap: a user stylesheet silently overrides the theme</a>
+    <a href="#7-known-risks-and-sharp-edges">7. Known risks and sharp edges</a>
+    <a href="#8-reproducing-the-verification">8. Reproducing the verification</a>
     <a href="#top">Top</a>
   </span>
 </nav>
@@ -415,7 +416,80 @@ hook is therefore documented as running after <code>post_theme_commands</code> �
 ordering guarantee the PR is implicitly relying on, and one Omarchy would not
 want to change casually.</p>
 <hr>
-<h2 id="6-known-risks-and-sharp-edges">6. Known risks and sharp edges</h2>
+<h2 id="6-the-trap-a-user-stylesheet-silently-overrides-the-theme">6. The trap: a user stylesheet silently overrides the theme</h2>
+<p>This is the part that looks like success and isn't. <strong>GTK loads
+<code>~/.config/gtk-&lt;ver&gt;/gtk.css</code> <em>in addition to</em> the theme in <code>~/.themes</code>, so it
+wins over everything the theme provides.</strong> A hook that sets <code>gtk-theme</code> correctly
+and rebuilds the stylesheets correctly can still be completely masked.</p>
+<p>This bit here. The hook was installed, <code>gtk-theme</code> read <code>Adapta</code>, and the theme
+looked right — because whatever else was generating the palette was generating it
+from the same <code>colors.toml</code>. But a comparison of the two sources showed the
+override in effect:</p>
+<table>
+<thead>
+<tr>
+<th>named colour</th>
+<th>the overriding stylesheet</th>
+<th>Adapta</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>theme_selected_bg_color</code></td>
+<td><code>#1c0a2c</code> — near-invisible on a dark window</td>
+<td><code>#3298fa</code>, the accent</td>
+</tr>
+<tr>
+<td><code>headerbar_fg_color</code></td>
+<td><code>#ffffff</code></td>
+<td><code>#e0e6ff</code></td>
+</tr>
+<tr>
+<td><code>theme_base_color</code></td>
+<td><code>#08020f</code></td>
+<td><code>#0a0314</code></td>
+</tr>
+<tr>
+<td><code>card_bg_color</code>, <code>popover_bg_color</code>, <code>view_bg_color</code>, …</td>
+<td>various</td>
+<td>various</td>
+</tr>
+</tbody>
+</table>
+<p>24 named colours were defined by both; 8 disagreed. The visible one is the
+selection background: the override painted it a dark purple that was effectively
+invisible against the window.</p>
+<p>The cause was the <code>thpm</code> theme plugin's <code>gtk-css-compat</code> integration, which
+deploys <code>~/.config/gtk-*/gtk.css</code> importing its own generated
+<code>thpm-theme.css</code> — 34 <code>@define-color</code> lines, loaded on top of the theme.</p>
+<h3 id="the-fix">The fix</h3>
+<pre><code class="language-bash">thpm plugin disable gtk-css-compat
+</code></pre>
+<p>Use the tool's own disable path rather than deleting the files by hand. thpm's
+<code>cleanup_gtk()</code> removes the managed import block <em>and</em> unlinks the generated
+<code>thpm-theme.css</code>, so it won't be rewritten on the next switch. Deleting the
+files manually leaves the integration enabled, which just re-creates them.</p>
+<p>This is not a thpm bug and not an Omarchy bug — it's two tools both legitimately
+owning GTK theming. thpm's own registry labels the integration <em>"Omarchy owns
+mode and icons; THPM covers optional theme GTK CSS"</em>, which is exactly the
+confusion: <strong>only one of them should be covering GTK CSS.</strong></p>
+<h3 id="how-the-hook-handles-it-now">How the hook handles it now</h3>
+<p>The hook checks for this on every switch and, if it finds a stylesheet importing
+<code>thpm-theme.css</code>, writes a one-time notice to
+<code>~/.local/state/omarchy/adapta-user-css-warned</code> and prints a short line to
+<strong>stderr</strong>. stderr rather than stdout because <code>omarchy-theme-set</code> discards hook
+stdout — the stock <code>90-thpm</code> hook does the same for its reporting.</p>
+<p>It deliberately does not disable the integration itself: a hook reaching into
+another tool's configuration on its own is worse than one that tells you. If you
+want it fully automatic, delete the marker file's <code>if</code> guard and call
+<code>thpm plugin disable gtk-css-compat</code> in its place.</p>
+<h3 id="why-a-stock-omarchy-install-does-not-hit-this">Why a stock Omarchy install does NOT hit this</h3>
+<p>Stock Omarchy ships no <code>~/.config/gtk-4.0/gtk.css</code> and no theme-set hooks
+(<code>/usr/share/omarchy/config/omarchy/hooks/theme-set.d/</code> is empty). thpm is a
+third-party install. So on a fresh install the three-step workflow — clone, install
+the hook, switch theme — works with nothing extra, and this section only applies
+to a machine that has since installed a plugin that also wants to own GTK CSS.</p>
+<h2 id="7-known-risks-and-sharp-edges">7. Known risks and sharp edges</h2>
 <p><strong><code>~/.config/gtk-4.0/</code> and <code>thpm</code>.</strong> The stock <code>90-thpm</code> hook manages
 <code>~/.config/gtk-*/gtk.css</code> and <code>~/.config/gtk-*/thpm-theme.css</code>, and its
 <code>apply_gtk()</code> resolves symlinks before writing. If <code>~/.config/gtk-4.0/gtk.css</code>
@@ -438,7 +512,7 @@ want the same measurement repeated.</p>
 the GTK theme stays Adwaita until then. Installing the hook should be followed
 by one <code>omarchy theme set &lt;current theme&gt;</code> to converge immediately.</p>
 <hr>
-<h2 id="7-reproducing-the-verification">7. Reproducing the verification</h2>
+<h2 id="8-reproducing-the-verification">8. Reproducing the verification</h2>
 <pre><code class="language-bash"># install
 omarchy hook install theme-set tools/95-adapta
 
