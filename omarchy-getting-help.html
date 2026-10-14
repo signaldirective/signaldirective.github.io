@@ -144,14 +144,16 @@ footer {
   <span class="brand">Getting Help with Omarchy</span>
   <span class="links">
     <a href="#2-asking-for-help-in-discord-omarchy-help">Jump to: #omarchy-help</a>
-    <a href="#3-filing-a-github-issue">Jump to: GitHub issues</a>
+    <a href="#3-getting-help-from-an-ai-agent">Jump to: AI help</a>
+    <a href="#4-filing-a-github-issue">Jump to: GitHub issues</a>
     <a href="#top">Top</a>
   </span>
 </nav>
 <main>
 <h1 id="getting-help-with-omarchy">Getting Help with Omarchy</h1>
-<p>A practical guide to asking for help in the Discord <strong><code>#omarchy-help</code></strong> forum and
-to filing a good <strong>GitHub issue</strong> against Omarchy.</p>
+<p>A practical guide to asking for help in the Discord <strong><code>#omarchy-help</code></strong> forum,
+to getting a first diagnosis from a local <strong>AI agent</strong>, and to filing a good
+<strong>GitHub issue</strong> against Omarchy.</p>
 <p>The difference between a question that gets solved in ten minutes and one that
 sits unanswered is almost never luck. It is preparation: reproducing the
 problem, collecting the right details, and presenting them so a volunteer can
@@ -175,18 +177,27 @@ understand the issue without asking five follow-up questions.</p>
 <li><a href="#211-good-vs-bad-examples">2.11 Good vs. bad examples</a></li>
 </ul>
 </li>
-<li><a href="#3-filing-a-github-issue">3. Filing a GitHub issue</a><ul>
-<li><a href="#31-when-to-file-an-issue-and-when-not-to">3.1 When to file an issue (and when not to)</a></li>
-<li><a href="#32-what-omarchys-bug-template-asks-for">3.2 What Omarchy&#39;s bug template asks for</a></li>
-<li><a href="#33-anatomy-of-a-great-issue">3.3 Anatomy of a great issue</a></li>
-<li><a href="#34-gathering-diagnostics-for-an-issue">3.4 Gathering diagnostics for an issue</a></li>
-<li><a href="#35-building-a-minimal-reproduction-for-omarchy">3.5 Building a minimal reproduction for Omarchy</a></li>
-<li><a href="#36-attaching-logs-images-and-videos">3.6 Attaching logs, images, and videos</a></li>
-<li><a href="#37-titles-and-labels">3.7 Titles and labels</a></li>
-<li><a href="#38-filing-with-the-gh-cli">3.8 Filing with the <code>gh</code> CLI</a></li>
-<li><a href="#39-conduct-and-follow-through">3.9 Conduct and follow-through</a></li>
-<li><a href="#310-copy-paste-template-for-a-github-issue">3.10 Copy-paste template for a GitHub issue</a></li>
-<li><a href="#311-good-vs-bad-examples">3.11 Good vs. bad examples</a></li>
+<li><a href="#3-getting-help-from-an-ai-agent">3. Getting help from an AI agent</a><ul>
+<li><a href="#31-run-opencode-for-the-first-time">3.1 Run OpenCode for the first time</a></li>
+<li><a href="#32-use-a-free-model">3.2 Use a free model (no account, no payment)</a></li>
+<li><a href="#33-load-the-omarchy-skill">3.3 Load the Omarchy skill</a></li>
+<li><a href="#34-add-and-load-the-omarchy-triage-skill">3.4 Add and load the omarchy-triage skill</a></li>
+<li><a href="#35-write-a-good-prompt">3.5 Write a good prompt</a></li>
+<li><a href="#36-what-the-agent-cannot-do">3.6 What the agent cannot do</a></li>
+</ul>
+</li>
+<li><a href="#4-filing-a-github-issue">4. Filing a GitHub issue</a><ul>
+<li><a href="#41-when-to-file-an-issue-and-when-not-to">4.1 When to file an issue (and when not to)</a></li>
+<li><a href="#42-what-omarchys-bug-template-asks-for">4.2 What Omarchy&#39;s bug template asks for</a></li>
+<li><a href="#43-anatomy-of-a-great-issue">4.3 Anatomy of a great issue</a></li>
+<li><a href="#44-gathering-diagnostics-for-an-issue">4.4 Gathering diagnostics for an issue</a></li>
+<li><a href="#45-building-a-minimal-reproduction-for-omarchy">4.5 Building a minimal reproduction for Omarchy</a></li>
+<li><a href="#46-attaching-logs-images-and-videos">4.6 Attaching logs, images, and videos</a></li>
+<li><a href="#47-titles-and-labels">4.7 Titles and labels</a></li>
+<li><a href="#48-filing-with-the-gh-cli">4.8 Filing with the <code>gh</code> CLI</a></li>
+<li><a href="#49-conduct-and-follow-through">4.9 Conduct and follow-through</a></li>
+<li><a href="#410-copy-paste-template-for-a-github-issue">4.10 Copy-paste template for a GitHub issue</a></li>
+<li><a href="#411-good-vs-bad-examples">4.11 Good vs. bad examples</a></li>
 </ul>
 </li>
 <li><a href="#appendix-a-command-quick-reference">Appendix A: Command quick reference</a></li>
@@ -206,6 +217,10 @@ maintainers use these queues for different jobs.</p>
 </tr>
 </thead>
 <tbody><tr>
+<td>&quot;Why is this happening?&quot; — you want a first diagnosis, or a draft of the question, before asking anyone</td>
+<td>An AI agent on your machine — see <a href="#3-getting-help-from-an-ai-agent">3. Getting help from an AI agent</a></td>
+</tr>
+<tr>
 <td>&quot;How do I…?&quot;, &quot;Is this expected?&quot;, &quot;Something&#39;s off but I&#39;m not sure it&#39;s a bug&quot;</td>
 <td>Discord <strong><code>#omarchy-help</code></strong></td>
 </tr>
@@ -642,11 +657,156 @@ replug fix.</p>
 </blockquote>
 <p>This post can be triaged immediately.</p>
 <hr>
-<h2 id="3-filing-a-github-issue">3. Filing a GitHub issue</h2>
+<h2 id="3-getting-help-from-an-ai-agent">3. Getting help from an AI agent</h2>
+<p>Before you post to Discord or file an issue, you can often get most of the way
+there on your own with an AI coding agent. Omarchy ships <strong>OpenCode</strong> — an open
+source coding agent — together with an <code>omarchy</code> skill, so an agent on your
+machine already knows the Omarchy command surface. It can read your logs, run
+the diagnostics described in <a href="#25-the-one-command-report-omarchy-debug">2.5</a>
+and <a href="#26-copying-logs-and-error-output">2.6</a>, and turn a vague &quot;it&#39;s
+broken&quot; into a precise help request.</p>
+<p>Treat this as a first pass, not a replacement for the Discord or a real bug
+report. Use it to understand what is going on and to draft the post you were
+going to make anyway.</p>
+<h3 id="31-run-opencode-for-the-first-time">3.1 Run OpenCode for the first time</h3>
+<p>OpenCode runs in a terminal. Omarchy installs it for you and can make it the
+default agent it launches from the menu and the <code>c</code> alias.</p>
+<ol>
+<li>Open a terminal.</li>
+<li>Start OpenCode:
+<pre><code class="language-bash">opencode
+</code></pre>
+</li>
+<li>On first launch you get the full-screen interface. Type your question at the
+prompt and press <code>Enter</code>.</li>
+</ol>
+<p>To make Omarchy launch OpenCode as your default agent (from the menu, the
+keybinding, and <code>omarchy agent</code>), set it once:</p>
+<pre><code class="language-bash">omarchy default agent opencode
+</code></pre>
+<p>If <code>opencode</code> is missing from your system, install it with the official
+installer, or choose it from <code>omarchy menu</code> → Setup → Default agent:</p>
+<pre><code class="language-bash">curl -fsSL https://opencode.ai/v2/install | bash
+</code></pre>
+<h3 id="32-use-a-free-model">3.2 Use a free model (no account, no payment)</h3>
+<p>OpenCode ships with several <strong>free models</strong>. You do not need an OpenCode
+account, an API key, or a credit card to use them. Pick one from inside
+OpenCode:</p>
+<ol>
+<li>Press <code>/models</code> to open the model picker.</li>
+<li>Choose any entry whose name ends in <strong>Free</strong>. Models that have been
+included at no cost: <strong>Big Pickle</strong>, <strong>Space Bunny Free</strong>, <strong>Cat Jam
+Free</strong>, <strong>MiMo-V2.6-Flash Free</strong>, <strong>Nemotron 3.5 Lightning Free</strong>,
+<strong>LongCat 2.5 Preview Free</strong>, <strong>Step 5 Preview Free</strong>, and <strong>Muse Spark
+1.3 Free</strong>.</li>
+<li>Ask your question in plain language.</li>
+</ol>
+<p>The exact free models rotate over time. The rule does not: any model marked
+<strong>Free</strong> costs nothing and needs no sign-in.</p>
+<p>You can also pin a free model as your default in
+<code>~/.config/opencode/opencode.json</code>:</p>
+<pre><code class="language-jsonc">{
+  "$schema": "https://opencode.ai/config.json",
+  "model": "opencode/big-pickle"
+}
+</code></pre>
+<blockquote>
+<p>Free models are shared and rate-limited, and some of them log prompts to
+improve the model. If one is busy, switch to another. Do not paste secrets,
+tokens, or anything private into a model you have not chosen to trust.</p>
+</blockquote>
+<h3 id="33-load-the-omarchy-skill">3.3 Load the Omarchy skill</h3>
+<p>Omarchy bundles an <code>omarchy</code> skill and registers it where agents look
+(<code>~/.agents/skills/omarchy</code>), so OpenCode finds it with no setup. A skill is a
+set of instructions the agent loads on demand; this one teaches it how Omarchy
+is put together, what <code>omarchy debug</code> reports, and which logs matter.</p>
+<p>To load it yourself, mention it in your prompt with an <code>@</code>:</p>
+<pre><code class="language-text">@omarchy My external monitor stays black after suspend. Help me figure out what is wrong.
+</code></pre>
+<p>OpenCode also loads the skill on its own when your question makes it relevant,
+so mentioning it is a nudge, not a requirement.</p>
+<h3 id="34-add-and-load-the-omarchy-triage-skill">3.4 Add and load the omarchy-triage skill</h3>
+<p><a href="https://github.com/Deoxizn/omarchy-triage">omarchy-triage</a> is a community
+skill that turns &quot;my computer is doing ___&quot; into a short answer about what is
+wrong and where to ask, plus a <code>triage-*.md</code> report with steps to reproduce,
+logs, system info, and a ready-to-paste help post. Install it once:</p>
+<pre><code class="language-bash">git clone https://github.com/Deoxizn/omarchy-triage ~/.agents/skills/omarchy-triage
+</code></pre>
+<p>OpenCode discovers every skill under <code>~/.agents/skills</code>. If it does not show
+up in the current session, restart OpenCode. Then ask for it by name, or just
+describe the problem and let the agent reach for it:</p>
+<pre><code class="language-text">@omarchy-triage My audio device disappears when I plug in my USB-C dock. What is wrong, and where should I post about it?
+</code></pre>
+<p>You can also have the agent install and load it for you in one step:</p>
+<pre><code class="language-text">Clone https://github.com/Deoxizn/omarchy-triage into ~/.agents/skills/omarchy-triage, then load the omarchy-triage skill and help me triage my problem.
+</code></pre>
+<p>Update it later with:</p>
+<pre><code class="language-bash">git -C ~/.agents/skills/omarchy-triage pull
+</code></pre>
+<p>Nothing is posted to Discord or GitHub for you. The skill only produces a
+draft and a report file until you decide to use them.</p>
+<h3 id="35-write-a-good-prompt">3.5 Write a good prompt</h3>
+<p>The rules from <a href="#1-the-universal-rules-read-these-once">section 1</a> apply to
+an agent too: give it the goal, the symptom, and what changed, and let it gather
+the evidence. An agent has one advantage over a stranger on Discord — it can run
+the diagnostics itself — so describe what you are trying to do and ask it to
+collect the details instead of pasting a wall of log.</p>
+<ul>
+<li><strong>State the goal and the symptom.</strong> &quot;I am trying to use an external monitor
+after suspend. After waking, the external display is black but the laptop panel
+works.&quot;</li>
+<li><strong>Say when it started and what changed.</strong> &quot;Started after the 4.0.4 update;
+worked on 4.0.3.&quot;</li>
+<li><strong>Let the agent run the commands.</strong> Ask it to run <code>omarchy version</code>,
+<code>omarchy debug --no-sudo --print</code>, <code>journalctl -b -p 4..1</code>, or
+<code>hyprctl configerrors</code> and read the output, rather than guessing.</li>
+<li><strong>Name the destination.</strong> Say whether you plan to post in Discord
+<code>#omarchy-help</code> or file a GitHub issue, so it writes the right format.</li>
+<li><strong>Ask for a minimal reproduction and a draft.</strong> &quot;Give me the smallest set of
+steps that reproduces this, and a ready-to-paste post.&quot;</li>
+<li><strong>Keep secrets out.</strong> Redact tokens, keys, emails, and serial numbers before
+they leave your machine.</li>
+<li><strong>One problem per conversation.</strong> Do not bundle three unrelated issues into
+one session.</li>
+</ul>
+<p>A prompt that works well with a fresh agent:</p>
+<pre><code class="language-text">Load the @omarchy skill, then help me triage a problem.
+
+Goal: &lt;what I was trying to do&gt;
+Symptom: &lt;what actually happens, including any verbatim error text&gt;
+Expected: &lt;what should happen&gt;
+Changed recently: &lt;update, new hardware, config edit, or &quot;nothing&quot;&gt;
+
+Please:
+1. Ask me anything you still need.
+2. Run the Omarchy diagnostics you think are relevant and read the output.
+3. Tell me what you think is wrong.
+4. Write a ready-to-paste post for &lt;Discord #omarchy-help | GitHub issue&gt;,
+   with steps to reproduce and a minimal reproduction.
+Do not change any files or settings without asking me first.
+</code></pre>
+<h3 id="36-what-the-agent-cannot-do">3.6 What the agent cannot do</h3>
+<ul>
+<li><strong>It can be confidently wrong.</strong> Verify before you act, especially before
+running a command it suggests or changing a config.</li>
+<li><strong>It cannot see your screen or hardware.</strong> For anything visual, capture it as
+in <a href="#27-screenshots-and-screen-recordings">2.7</a> and describe what you see.</li>
+<li><strong>It cannot post for you.</strong> The omarchy-triage skill drafts; you decide what
+to send.</li>
+<li><strong>Free models are shared and capped.</strong> They may be slower or weaker than a
+paid model. For a hard problem, try another free model.</li>
+<li><strong>Approve permissions carefully.</strong> If the agent asks to run a command, make
+sure you understand what it does. When in doubt, ask it to explain first.</li>
+</ul>
+<p>If the agent gets you nowhere you have lost nothing: you now have the version,
+the logs, and a clear description you can post in Discord <code>#omarchy-help</code> or
+turn into a <a href="#4-filing-a-github-issue">GitHub issue</a>.</p>
+<hr>
+<h2 id="4-filing-a-github-issue">4. Filing a GitHub issue</h2>
 <p>GitHub issues are the permanent, searchable record of a confirmed bug. They are
 the right tool <strong>only</strong> once a problem has been reproduced and confirmed to be a
 bug in Omarchy itself.</p>
-<h3 id="31-when-to-file-an-issue-and-when-not-to">3.1 When to file an issue (and when not to)</h3>
+<h3 id="41-when-to-file-an-issue-and-when-not-to">4.1 When to file an issue (and when not to)</h3>
 <p><strong>File an issue when:</strong></p>
 <ul>
 <li>You can reproduce the problem on the latest version.</li>
@@ -666,7 +826,7 @@ existing issue</strong> instead. Duplicates get closed and split the discussion.
 </ul>
 <p>The repository disables blank issues and routes Suggestions and Support through
 its template chooser, so you will be pointed to the right place automatically.</p>
-<h3 id="32-what-omarchys-bug-template-asks-for">3.2 What Omarchy&#39;s bug template asks for</h3>
+<h3 id="42-what-omarchys-bug-template-asks-for">4.2 What Omarchy&#39;s bug template asks for</h3>
 <p>Omarchy&#39;s bug template is intentionally short. It asks for two things:</p>
 <ol>
 <li><strong>System details</strong> — required. For example:
@@ -679,7 +839,7 @@ product you bought from a vendor.&quot;</em> Keep that in mind throughout.</p>
 <p>Because the template is minimal, the quality of your issue is entirely up to how
 much of the structure below you include. A great issue goes well beyond the two
 required fields.</p>
-<h3 id="33-anatomy-of-a-great-issue">3.3 Anatomy of a great issue</h3>
+<h3 id="43-anatomy-of-a-great-issue">4.3 Anatomy of a great issue</h3>
 <table>
 <thead>
 <tr>
@@ -751,7 +911,7 @@ required fields.</p>
 </tbody></table>
 <p>Write the issue so a maintainer can reproduce it <strong>without asking you a single
 follow-up question</strong>.</p>
-<h3 id="34-gathering-diagnostics-for-an-issue">3.4 Gathering diagnostics for an issue</h3>
+<h3 id="44-gathering-diagnostics-for-an-issue">4.4 Gathering diagnostics for an issue</h3>
 <p>The tools are the same as for Discord; the difference is that a GitHub issue
 should be self-contained and permanent.</p>
 <pre><code class="language-bash"># 1. Exact versions
@@ -778,7 +938,7 @@ omarchy debug
 </ul>
 <p>Because <code>logs.omarchy.org</code> links expire in 24 hours, <strong>also paste the key lines
 inline</strong> or attach the log file to the issue so the evidence survives.</p>
-<h3 id="35-building-a-minimal-reproduction-for-omarchy">3.5 Building a minimal reproduction for Omarchy</h3>
+<h3 id="45-building-a-minimal-reproduction-for-omarchy">4.5 Building a minimal reproduction for Omarchy</h3>
 <p>A minimal reproduction is the most valuable thing in any bug report. For
 Omarchy, it usually takes one of these forms:</p>
 <ul>
@@ -801,7 +961,7 @@ so detail is everything.</li>
 </ul>
 <p>Minimize by removing everything unrelated. If you can trigger the bug with one
 line of config and one command, you have a reproduction that will get fixed.</p>
-<h3 id="36-attaching-logs-images-and-videos">3.6 Attaching logs, images, and videos</h3>
+<h3 id="46-attaching-logs-images-and-videos">4.6 Attaching logs, images, and videos</h3>
 <ul>
 <li><strong>Web form:</strong> drag and drop files directly into the issue body. This works for
 images and videos. Prefer a short recording for visual bugs.</li>
@@ -815,7 +975,7 @@ upload. Do not paste thousands of lines inline.</li>
 paths, emails, and machine identifiers. Remove the sensitive values but keep
 enough structure that the log is still readable.</li>
 </ul>
-<h3 id="37-titles-and-labels">3.7 Titles and labels</h3>
+<h3 id="47-titles-and-labels">4.7 Titles and labels</h3>
 <ul>
 <li>Use the <strong>object — deviation</strong> convention from
 <a href="#22-writing-the-title">2.2</a>. A title like <code>Export fails when filename contains an emoji</code> is triaged fast; <code>It&#39;s broken</code> is not.</li>
@@ -824,7 +984,7 @@ the problem.</li>
 <li>Labels such as <code>bug</code> are applied by maintainers — you generally do not need to
 set them. The template applies <code>bug</code> automatically.</li>
 </ul>
-<h3 id="38-filing-with-the-gh-cli">3.8 Filing with the <code>gh</code> CLI</h3>
+<h3 id="48-filing-with-the-gh-cli">4.8 Filing with the <code>gh</code> CLI</h3>
 <p>The GitHub CLI is the fastest way to search, file, and follow up.</p>
 <pre><code class="language-bash"># Search existing issues first — avoid duplicates
 gh search issues --repo omacom/omarchy &quot;external monitor suspend&quot;
@@ -840,9 +1000,9 @@ gh issue view &lt;number&gt; --repo omacom/omarchy
 gh issue comment &lt;number&gt; --repo omacom/omarchy --body &quot;Additional info: ...&quot;
 </code></pre>
 <p>Prepare the body with the template in
-<a href="#310-copy-paste-template-for-a-github-issue">3.10</a>. Remember that media must be
+<a href="#410-copy-paste-template-for-a-github-issue">4.10</a>. Remember that media must be
 attached through the web UI afterwards.</p>
-<h3 id="39-conduct-and-follow-through">3.9 Conduct and follow-through</h3>
+<h3 id="49-conduct-and-follow-through">4.9 Conduct and follow-through</h3>
 <ul>
 <li><strong>Write in English.</strong> Issues are read by maintainers and users worldwide.</li>
 <li><strong>Be civil and patient.</strong> Maintainers are volunteers; Omarchy is a gift, not a
@@ -860,7 +1020,7 @@ overwritten on update. Follow the repository&#39;s <code>AGENTS.md</code> and ru
 <code>./test/all</code> before pushing. A PR that fixes a visual bug should include
 before/after captures.</li>
 </ul>
-<h3 id="310-copy-paste-template-for-a-github-issue">3.10 Copy-paste template for a GitHub issue</h3>
+<h3 id="410-copy-paste-template-for-a-github-issue">4.10 Copy-paste template for a GitHub issue</h3>
 <pre><code class="language-markdown">### System details
 
 - Omarchy: &lt;`omarchy version`&gt;
@@ -915,7 +1075,7 @@ stock config/theme works.&gt;
 
 &lt;Attach a short recording or screenshot for visual bugs.&gt;
 </code></pre>
-<h3 id="311-good-vs-bad-examples">3.11 Good vs. bad examples</h3>
+<h3 id="411-good-vs-bad-examples">4.11 Good vs. bad examples</h3>
 <p><strong>Bad issue</strong></p>
 <blockquote>
 <p><strong>Title:</strong> Doesn&#39;t work</p>
@@ -1126,12 +1286,18 @@ Omarchy skill).</li>
 <hr>
 <p><em>When in doubt: reproduce it, minimize it, gather <code>omarchy debug</code>, and post the
 whole story in one message. That is 90% of getting help.</em></p>
+<hr>
+<h2 id="credits">Credits</h2>
+<p>The <a href="https://github.com/Deoxizn/omarchy-triage">omarchy-triage</a> skill used
+in <a href="#34-add-and-load-the-omarchy-triage-skill">3.4</a> is by
+<strong>Deoxizn</strong>. Thanks for building a tool that turns a vague problem into a
+report someone can actually act on.</p>
 
 </main>
 <footer>
-  Getting Help with Omarchy &mdash; a guide to Discord <code>#omarchy-help</code> and
-  GitHub issues. Commands and paths reflect Omarchy 4.x; verify with
-  <code>omarchy commands</code> on your system.
+  Getting Help with Omarchy &mdash; a guide to using an AI agent, Discord
+  <code>#omarchy-help</code>, and GitHub issues. Commands and paths reflect Omarchy
+  4.x; verify with <code>omarchy commands</code> on your system.
 </footer>
 </body>
 </html>
