@@ -753,6 +753,7 @@ section[id] {
 .t-romero    { --p1: #e9e5dd; --p2: #c2b8ae; --p3: #0e0e0e; --p4: #d4d0c8; }
 .t-bombshell { --p1: #d6b03a; --p2: #c05246; --p3: #1a1b16; --p4: #ded2ba; }
 .t-bleach    { --p1: #e23c8c; --p2: #e0524f; --p3: #120a0e; --p4: #dcd6de; }
+.t-morphotomy { --p1: #ff2e3d; --p2: #7d0a10; --p3: #080506; --p4: #d3c7be; }
 
 .theme-caption {
     display: flex;
