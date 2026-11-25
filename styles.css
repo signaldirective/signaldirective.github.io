@@ -572,6 +572,15 @@ section[id] {
     text-align: center;
 }
 
+.disc-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 14px 32px;
+    margin-top: 18px;
+}
+
 /* collection marquee */
 
 .collection {
@@ -1135,60 +1144,6 @@ section[id] {
     transform: translate(2px, -2px);
 }
 
-/* ---------- contact ---------- */
-
-.contact-grid {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: clamp(24px, 4vw, 44px);
-    margin-top: clamp(30px, 4vw, 44px);
-}
-
-.contact-card {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    padding-top: 16px;
-    border-top: 1px solid var(--line);
-    text-decoration: none;
-    transition: border-color .25s var(--ease);
-}
-
-.contact-card:hover {
-    border-color: var(--accent);
-}
-
-.contact-label {
-    color: var(--muted);
-    font: italic 400 13px/1 var(--serif);
-}
-
-.contact-handle {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 12px;
-    color: var(--ink);
-    font: 400 clamp(1.25rem, 1.8vw, 1.55rem)/1.15 var(--serif);
-    letter-spacing: -.015em;
-    transition: color .2s var(--ease);
-}
-
-.contact-handle i {
-    color: var(--accent-text);
-    font-style: normal;
-    font-size: 13px;
-    transition: transform .25s var(--ease);
-}
-
-.contact-card:hover .contact-handle {
-    color: var(--accent-text);
-}
-
-.contact-card:hover .contact-handle i {
-    transform: translate(2px, -2px);
-}
-
 /* ---------- footer ---------- */
 
 .footer {
@@ -1600,11 +1555,6 @@ section[id] {
     .guide-grid {
         grid-template-columns: minmax(0, 1fr);
         gap: 28px;
-    }
-
-    .contact-grid {
-        grid-template-columns: minmax(0, 1fr);
-        gap: 24px;
     }
 
     .guide-head {
