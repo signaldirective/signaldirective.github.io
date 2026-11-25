@@ -752,8 +752,10 @@ section[id] {
 .t-adapta    { --p1: #9a9ac4; --p2: #5c5c78; --p3: #2b2b33; --p4: #ececf5; }
 .t-romero    { --p1: #e9e5dd; --p2: #c2b8ae; --p3: #0e0e0e; --p4: #d4d0c8; }
 .t-bombshell { --p1: #d6b03a; --p2: #c05246; --p3: #1a1b16; --p4: #ded2ba; }
-.t-bleach    { --p1: #e23c8c; --p2: #e0524f; --p3: #120a0e; --p4: #dcd6de; }
+.t-bleach     { --p1: #e23c8c; --p2: #e0524f; --p3: #120a0e; --p4: #dcd6de; }
 .t-morphotomy { --p1: #ff2e3d; --p2: #7d0a10; --p3: #080506; --p4: #d3c7be; }
+.t-capricorn  { --p1: #24d120; --p2: #f80824; --p3: #021228; --p4: #d8d2c9; }
+.t-altair     { --p1: #e87993; --p2: #8eafc0; --p3: #171923; --p4: #d9d0c3; }
 
 .theme-caption {
     display: flex;
@@ -1130,6 +1132,60 @@ section[id] {
 }
 
 .guide:hover .guide-link i {
+    transform: translate(2px, -2px);
+}
+
+/* ---------- contact ---------- */
+
+.contact-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(24px, 4vw, 44px);
+    margin-top: clamp(30px, 4vw, 44px);
+}
+
+.contact-card {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-top: 16px;
+    border-top: 1px solid var(--line);
+    text-decoration: none;
+    transition: border-color .25s var(--ease);
+}
+
+.contact-card:hover {
+    border-color: var(--accent);
+}
+
+.contact-label {
+    color: var(--muted);
+    font: italic 400 13px/1 var(--serif);
+}
+
+.contact-handle {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    color: var(--ink);
+    font: 400 clamp(1.25rem, 1.8vw, 1.55rem)/1.15 var(--serif);
+    letter-spacing: -.015em;
+    transition: color .2s var(--ease);
+}
+
+.contact-handle i {
+    color: var(--accent-text);
+    font-style: normal;
+    font-size: 13px;
+    transition: transform .25s var(--ease);
+}
+
+.contact-card:hover .contact-handle {
+    color: var(--accent-text);
+}
+
+.contact-card:hover .contact-handle i {
     transform: translate(2px, -2px);
 }
 
@@ -1544,6 +1600,11 @@ section[id] {
     .guide-grid {
         grid-template-columns: minmax(0, 1fr);
         gap: 28px;
+    }
+
+    .contact-grid {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 24px;
     }
 
     .guide-head {
